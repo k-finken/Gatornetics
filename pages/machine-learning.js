@@ -6,7 +6,7 @@ export default function Home() {
     <>
       <Navbar></Navbar>
       <div className='mt-10 w-full flex justify-center items-center'>
-        <h1 className="text-3xl font-bold underline">ML Analysis Page</h1> 
+        <h1 className="text-3xl font-bold underline">ML Analysis Page!</h1> 
       </div>
     </>
   )
