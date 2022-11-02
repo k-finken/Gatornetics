@@ -10,7 +10,7 @@ export default function NavBar() {
                 <div>
                     <div className="flex items-center justify-between py-3 md:py-5 md:block">
                         <Link href="/">
-                            <h2 className="text-2xl font-bold text-white hover:text-blue-600">Gatornetics</h2>
+                            <h2 className="text-2xl font-bold text-white hover:text-blue-600 hover:cursor-pointer">Gatornetics</h2>
                         </Link>
                         <div className="md:hidden">
                             <button
