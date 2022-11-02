@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 
-const teamDetails = () => {
+const TeamDetails = () => {
     
     const router = useRouter();
     const {teamName} = router.query;
@@ -18,4 +18,4 @@ const teamDetails = () => {
     );
 }
 
-export default teamDetails;
+export default TeamDetails;

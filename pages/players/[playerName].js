@@ -4,7 +4,7 @@ import Footer from '../../components/Footer'
 
 
 
-const playerDetails = () => {
+const PlayerDetails = () => {
     
     const router = useRouter();
     const {playerName} = router.query;
@@ -20,4 +20,4 @@ const playerDetails = () => {
     );
 }
 
-export default playerDetails;
+export default PlayerDetails;
