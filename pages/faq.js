@@ -3,7 +3,7 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { useRouter } from 'next/router'
 
-export default function faq() {
+export default function Faq() {
 
   const router = useRouter()
 
@@ -11,7 +11,7 @@ export default function faq() {
     e.preventDefault()
     router.push("/players/anthony-richardson");
   }
-  
+
   const navTeam = (e) => {
     e.preventDefault()
     router.push("/teams/florida-gators");
