@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
+import React from "react";
 
 
 
@@ -52,8 +53,9 @@ const PlayerDetails = () => {
                         </div>
                     </div>
                 </div>
-                <div>
-
+                <div className="flex justify-center items-center">
+                    <button className="hover:text-white hover:bg-gray-600 lg:text-xl bg-gray-300 transition duration-350 ease-in-out focus:outline-white focus:ring-2 focus:ring-offset-2 ring-offset-indigo-700 focus:ring-white rounded rounded border border-white text-black px-4 sm:px-8 py-1 sm:py-3 text-sm">Passing</button>
+                    <button className="hover:text-white hover:bg-gray-600 lg:text-xl bg-gray-300 transition duration-150 ease-in-out focus:outline-white focus:ring-2 focus:ring-offset-2 ring-offset-indigo-700 focus:ring-white rounded rounded border border-white text-black px-4 sm:px-8 py-1 sm:py-3 text-sm ml-6 sm:ml-10">Rushing</button>
                 </div>
             </div>
             <Footer/>
