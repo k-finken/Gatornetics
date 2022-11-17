@@ -58,7 +58,7 @@ const PlayerDetails = () => {
                     <button className="hover:text-white hover:bg-gray-600 lg:text-xl bg-gray-300 transition duration-150 ease-in-out focus:outline-white focus:ring-2 focus:ring-offset-2 ring-offset-indigo-700 focus:ring-white rounded rounded border border-white text-black px-4 sm:px-8 py-1 sm:py-3 text-sm ml-6 sm:ml-10">Rushing</button>
                 </div>
                 <div>
-                    <h1 className="mt-10 flex justify-center text-3xl font-bold">Charts</h1>
+                    <h1 className="mt-10 flex justify-center text-3xl font-bold">Charts go here</h1>
                 </div>
             </div>
             <Footer/>
