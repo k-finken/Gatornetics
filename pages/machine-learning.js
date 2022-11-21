@@ -1,15 +1,14 @@
-import React from 'react'
-import Footer from '../components/Footer'
-import Navbar from '../components/Navbar'
+import React from 'react';
+import Layout from '../components/Layout';
 
-export default function Machinelearning() {
+export default function MachineLearning() {
   return (
-    <>
-      <Navbar></Navbar>
+    <Layout>
       <div className='mt-10 w-full flex justify-center items-center'>
-        <h1 className="text-3xl font-bold underline">ML Analysis Page!</h1> 
+        <h1 className="text-3xl font-bold text-gray-100">Machine Learning Page</h1> 
       </div>
-      <Footer/>
-    </>
+      <div className="h-96"></div>
+      <div className="h-36"></div>
+    </Layout>
   )
 }

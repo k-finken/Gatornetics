@@ -3,7 +3,7 @@ import Link from "next/link";
 
 function Footer() {
   return (
-    <footer className="p-4 shadow bg-gray-800 mt-20">
+    <footer className="p-4 shadow mt-20">
       <div className="flex mb-4 justify-center">
         <Link href="/">
           <h2 className="text-2xl font-bold text-white hover:text-blue-600 cursor-pointer">
@@ -30,7 +30,6 @@ function Footer() {
           </li>
         </ul>
       </div>
-      <hr className="border-gray-700 my-4"></hr>
       <div className="block text-sm text-gray-500 text-center">
         © 2022{" "}
         <Link href="/">
