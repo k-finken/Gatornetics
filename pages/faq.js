@@ -9,12 +9,12 @@ export default function Faq() {
 
   const navPlayer = (e) => {
     e.preventDefault()
-    router.push("/players/anthony-richardson");
+    router.push("/players/4429084");
   }
 
   const navTeam = (e) => {
     e.preventDefault()
-    router.push("/teams/florida-gators");
+    router.push("/teams/57");
   }
 
   return (

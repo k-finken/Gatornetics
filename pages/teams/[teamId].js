@@ -9,7 +9,7 @@ export async function getStaticPaths() {
     const teams = await prisma.teams.findMany()
 
     const paths = teams.map((team) => ({
-        params: { teamName: team.school.replace(' ', '-').toLowerCase() }
+        params: {teamId: team.id.toString()}
     }))
 
     return { paths, fallback: false }
@@ -19,16 +19,13 @@ export async function getStaticPaths() {
 //this function gathers the data from the player given in the path
 export async function getStaticProps(context) {
     const { params } = context;
-    const teamName = params.teamName;
+    const teamId = parseInt(params.teamId);
 
     const prisma = new PrismaClient()
 
-
-    const school = teamName.replace('-', ' ');
-
-    const teamData = await prisma.teams.findFirst({
+    const teamData = await prisma.teams.findUnique({
         where: {
-            school: school,
+            id: teamId,
         }
     })
 

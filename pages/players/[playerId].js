@@ -1,9 +1,7 @@
-import { useRouter } from 'next/router';
 import Navbar from '../../components/Navbar'
 import Footer from '../../components/Footer'
 import { prisma, PrismaClient } from '@prisma/client';
-import { useContext } from 'react';
-import {userIcon} from '../../images/user-icon.svg'
+
 
 //this function generates all the paths that the dynamic query can take
 export async function getStaticPaths() {
@@ -11,7 +9,7 @@ export async function getStaticPaths() {
     const players = await prisma.players.findMany()
 
     const paths = players.map((player) => ({
-        params: { playerName: player.firstName.toLowerCase() + '-' + player.lastName.toLowerCase() }
+        params: {playerId: player.id.toString()}
     }))
 
     return { paths, fallback: false }
@@ -21,18 +19,13 @@ export async function getStaticPaths() {
 //this function gathers the data from the player given in the path
 export async function getStaticProps(context) {
     const { params } = context;
-    const playerName = params.playerName;
+    const playerId = parseInt(params.playerId);
 
     const prisma = new PrismaClient()
 
-
-    const firstName = playerName.split('-')[0];
-    const lastName = playerName.split('-')[1];
-
     const playerData = await prisma.players.findFirst({
         where: {
-            firstName: firstName,
-            lastName: lastName,
+            id: playerId,
         }
     })
 
