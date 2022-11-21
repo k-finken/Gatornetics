@@ -1,23 +1,53 @@
 import React, { useState } from "react";
+import { Chart, ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+import Link from "next/link";
+
+
+Chart.register(ArcElement, Tooltip, Legend);
+
+
 
 function Index() {
     const [show, setShow] = useState(false);
+
+    const dataPie = {
+        labels: ["Ohio State", "Georgia"],
+        datasets: [
+          {
+            label: "This years national champion",
+            data: [55, 45],
+            backgroundColor: [
+              "rgb(173, 216, 230)",
+              "rgb(144, 238, 144)",
+            ],
+            hoverOffset: 2,
+          },
+        ],
+    };
+
+
     return (
-        <div className="py-6 bg-gray-100 overflow-y-hidden">
-            <div className="w-full px-6">
-                <div className="mt-8 relative rounded-lg bg-gray-800 container mx-auto flex flex-col items-center pt-12 sm:pt-24 pb-24 sm:pb-32 md:pb-48 lg:pb-56 xl:pb-64">
-                    <img className="mr-2 lg:mr-12 mt-2 lg:mt-12 absolute right-0 top-0" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/center_aligned_with_image-svg2.svg" alt="bg" />
-                    <img className="ml-2 lg:ml-12 mb-2 lg:mb-12 absolute bottom-0 left-0" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/center_aligned_with_image-svg3.svg" alt="bg" />
-                <div className="w-11/12 sm:w-2/3 mb-5 sm:mb-10 mt-20">
-                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-center text-white font-bold leading-tight">Gatornetics -- insert witty slogan here</h1>
+        <section className="">
+            <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+                <div className="ml-10 mr-auto place-self-center lg:col-span-7">
+                    <h1 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white text-gray-200">Welcome to Gatornetics</h1>
+                    <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">From data visualization to in-depth machine learning models we provide all the tools you need.</p>
+                    <p href="#" className="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg transition focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+                        Get started
+                        <svg className="w-5 h-5 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </p>
+                    <Link href="/signUp">
+                        <a className="animate-bounce inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-200 border hover:text-gray-700 transition border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">Signup</a>
+                    </Link>
                 </div>
-                    <div className="flex justify-center items-center">
-                        <button className="hover:text-white hover:bg-transparent lg:text-xl hover:border-white border bg-white transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ring-offset-indigo-700	focus:ring-white rounded text-indigo-700 px-4 sm:px-8 py-1 sm:py-3 text-sm">Get Started</button>
-                        <button className="hover:bg-white hover:text-indigo-600 lg:text-xl hover:border-indigo-600 ml-3 sm:ml-6 bg-transparent transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 ring-offset-indigo-700 focus:ring-white hover:bg-indigo-700-800 rounded border border-white text-white px-4 sm:px-8 py-1 sm:py-3 text-sm">Learn More</button>
-                    </div>
+                <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
+                    <Pie data={dataPie}></Pie>
                 </div>
             </div>
-        </div>
+            <div className="shadow-lg rounded-lg overflow-hidden">
+            </div>
+        </section>
     );
 }
 

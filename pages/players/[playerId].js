@@ -1,6 +1,5 @@
-import Navbar from '../../components/Navbar'
-import Footer from '../../components/Footer'
 import { prisma, PrismaClient } from '@prisma/client';
+import Layout from '../../components/Layout';
 
 
 //this function generates all the paths that the dynamic query can take
@@ -36,8 +35,7 @@ export async function getStaticProps(context) {
 
 const PlayerDetails = ({ playerData }) => {
     return (
-        <>
-            <Navbar />
+        <Layout>
             <div>
                 <div className="flex justify-center mt-5">
                     <img className="flex h-200 mx-20 bg-gray-400 rounded-lg" src="https://a.espncdn.com/combiner/i?img=/i/headshots/college-football/players/full/4429084.png" width="350" height="400" />
@@ -79,8 +77,7 @@ const PlayerDetails = ({ playerData }) => {
                 </div>
                 <div className="mt-20 w-full h-96 bg-slate-500 "/>
             </div>
-            <Footer />
-        </>
+        </Layout>
     );
 }
 

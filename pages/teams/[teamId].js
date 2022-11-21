@@ -1,7 +1,6 @@
 import { useRouter } from 'next/router';
-import Navbar from '../../components/Navbar'
-import Footer from '../../components/Footer'
 import { prisma, PrismaClient } from '@prisma/client';
+import Layout from '../../components/Layout'
 
 //this function generates all the paths that the dynamic query can take
 export async function getStaticPaths() {
@@ -36,12 +35,8 @@ export async function getStaticProps(context) {
 
 const TeamDetails = ({ teamData }) => {
 
-    const router = useRouter();
-    const { teamName } = router.query;
-
     return (
-        <>
-            <Navbar />
+        <Layout>
             <div>
                 <div className="flex justify-center mt-5">
                     <img className={"flex h-200 bg-[" + teamData.color + "] mx-20 rounded-lg"} src={teamData.logos.split(',')[0].replace('[','').replaceAll("'", '')} width="350" height="400" />
@@ -65,10 +60,9 @@ const TeamDetails = ({ teamData }) => {
                 <div>
                     <h1 className="mt-10 flex justify-center text-3xl font-bold">Charts go here</h1>
                 </div>
-                <div className="mt-20 w-full h-96 bg-slate-500 " />
+                <div className="flex m-auto mt-20 w-3/4 rounded h-96 bg-blue-100 " />
             </div>
-            <Footer />
-        </>
+        </Layout>
     );
 }
 
