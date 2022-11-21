@@ -1,8 +1,9 @@
 import React from 'react'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
+import { prisma, PrismaClient } from '@prisma/client';
 
-export default function Machinelearning() {
+export default function Machinelearning({players}) {
   return (
     <>
       <Navbar></Navbar>

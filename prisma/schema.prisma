@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
@@ -9,15 +10,25 @@ datasource db {
 
 model players {
   id           Int     @id
-  teamId       Int?
-  firstName    String? @db.VarChar(255)
-  lastName     String? @db.VarChar(255)
-  team         String? @db.VarChar(255)
-  year         Int?
-  position     String? @db.VarChar(2)
-  jerseyNumber String? @db.VarChar(2)
+  team_id      Int?
+  firstName    String  @db.VarChar(255)
+  lastName     String  @db.VarChar(255)
+  team         String  @db.VarChar(255)
+  year         Int
+  position     String  @db.VarChar(2)
+  jerseyNumber String  @db.VarChar(2)
   height       Int?
   weight       Int?
   homeCity     String? @db.VarChar(255)
   homeState    String? @db.VarChar(255)
+
+  @@index([team_id], map: "teamID")
+}
+
+model teams {
+  id         Int    @id
+  school     String @db.VarChar(255)
+  conference String @db.VarChar(10)
+  color      String @db.VarChar(7)
+  logos      String @db.Text
 }
