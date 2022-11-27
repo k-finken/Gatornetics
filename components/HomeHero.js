@@ -68,7 +68,7 @@ function Index({foundPlayer}) {
                 }
             },
             legend: {
-                position: 'bottom'
+                position: 'bottom',
             },
             title: {
                 display : true,
@@ -82,14 +82,28 @@ function Index({foundPlayer}) {
             },
         },
         scales: {
-            yAxes: [
-                {
-                    ticks: {
-                        suggestedMin: 0,
-                        suggestedMax: 400
+            y: {
+                position: "left",
+                ticks: {
+                    color: 'gray'
+                },
+                title: {
+                    display: true,
+                    text: "(yards)",
+                    color: 'gray',
+                    font: {
+                        size: 18,
+                        family: "system-ui",
+                        weight: "300"
                     }
                 }
-            ]
+            },
+            x: {
+                ticks: {
+                    color: 'gray'
+                }
+            }
+
         }
     };
 
@@ -97,7 +111,7 @@ function Index({foundPlayer}) {
         labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
         datasets: [
             {
-                label: 'Mock Data',
+                label: 'Existing Data',
                 data: [150, 140, 180, 110, 200, , , ],
                 borderColor: '#000',
                 backgroundColor: '#000',
@@ -140,9 +154,9 @@ function Index({foundPlayer}) {
                     <Line data={lineData} options={lineOptions}></Line>
                 </div>
                 <div className="mr-10 mr-auto place-self-center lg:col-span-4">
-                    <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">All player and team data is drawn directly from fact checked sources</p>
-                    <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">Data is run through ML analysis to predict future outcomes</p>
-                    <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">Updated every week, data is always up to date and reliable</p>
+                    <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400">All player and team data is drawn directly from fact checked sources.</p>
+                    <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400">Data is run through ML analysis to predict future outcomes.</p>
+                    <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400">Updated every week, data is always up to date and reliable.</p>
                 </div>
             </div>
             <div className="mt-20 flex justify-center items-center">
