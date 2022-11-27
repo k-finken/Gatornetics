@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Chart, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Tooltip, Legend, Title, PieController } from 'chart.js';
+import { Chart, ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Tooltip, Legend, Title, PieController } from 'chart.js';
 import { Doughnut, Pie, Line } from 'react-chartjs-2';
 import Link from "next/link";
 import { prisma, PrismaClient } from '@prisma/client';
@@ -58,12 +58,21 @@ function Index({foundPlayer}) {
     const lineOptions = {
         responsive: true,
         plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function (tooltipItem) {
+                        const value = tooltipItem.dataset.data[tooltipItem.dataIndex];
+
+                        return `${value} yards`;
+                    }
+                }
+            },
             legend: {
                 position: 'bottom'
             },
             title: {
                 display : true,
-                text: "Anthony Richardson Passing Yards",
+                text: "Player Passing Yards",
                 color: '#66f',
                 font: {
                     size: 34,
