@@ -147,7 +147,7 @@ function Index({foundPlayer}) {
                 </div>
             </div>
             <div className="mt-20 flex justify-center items-center">
-                <h2 className="max-w-2xl mb-4 text-4xl font-bold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white text-gray-200">How it works</h2>
+                <h2 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white text-gray-200">How it works</h2>
             </div>
             <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
                 <div className="ml-10 hidden lg:mt-0 lg:col-span-8 lg:flex">
@@ -155,7 +155,7 @@ function Index({foundPlayer}) {
                 </div>
                 <div className="mr-10 mr-auto place-self-center lg:col-span-4">
                     <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400">All player and team data is drawn directly from fact checked sources.</p>
-                    <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400">Data is run through ML analysis to predict future outcomes.</p>
+                    <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400">Data is run through machine learning analysis to predict future outcomes.</p>
                     <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400">Updated every week, data is always up to date and reliable.</p>
                 </div>
             </div>
