@@ -147,7 +147,7 @@ function Index({foundPlayer}) {
                 </div>
             </div>
             <div className="mt-20 flex justify-center items-center">
-                <h2 className="mt-10 max-w-2xl mb-4 text-4xl font-bold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white text-gray-200">How it works</h2>
+                <h2 className="max-w-2xl mb-4 text-4xl font-bold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white text-gray-200">How it works</h2>
             </div>
             <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
                 <div className="ml-10 hidden lg:mt-0 lg:col-span-8 lg:flex">
