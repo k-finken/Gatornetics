@@ -37,38 +37,38 @@ const PlayerDetails = ({ playerData }) => {
     return (
         <Layout>
             <div>
-                <div className="flex justify-center mt-5">
+                <div className="flex flex-wrap justify-center mt-5">
                     <img className="flex h-200 mx-20 bg-gray-400 rounded-lg" src="https://a.espncdn.com/combiner/i?img=/i/headshots/college-football/players/full/4429084.png" width="350" height="400" />
                     <div className="flex flex-col mx-20 justify-right">
                         <div className="m-auto flex flex-col items-left text-gray-600 text-s">
                             <div className="flex items-end">
                                 <h3 className="text-xl">Name:</h3>
-                                <h3 className="text-2xl ml-6 sm:ml-10"><b>{playerData.firstName} {playerData.lastName}</b></h3>
+                                <h3 className="text-2xl ml-5 sm:ml-10"><b>{playerData.firstName} {playerData.lastName}</b></h3>
                             </div>
                             <div className="flex items-end">
                                 <h3 className="text-xl">Height:</h3>
-                                <h3 className="text-2xl ml-6 sm:ml-9"><b>{Math.floor(playerData.height/12)}ft {playerData.height%12}in</b></h3>
+                                <h3 className="text-2xl ml-4 sm:ml-9"><b>{Math.floor(playerData.height/12)}ft {playerData.height%12}in</b></h3>
                             </div>
                             <div className="flex items-end">
                                 <h3 className="text-xl">Weight:</h3>
-                                <h3 className="text-2xl ml-6 sm:ml-8">{playerData.weight}lbs</h3>
+                                <h3 className="text-2xl ml-3 sm:ml-8"><b>{playerData.weight} lbs</b></h3>
                             </div>
                             <div className="flex items-end">
                                 <h3 className="text-xl">Position:</h3>
-                                <h3 className="text-2xl ml-6 sm:ml-6"><b>{playerData.position}</b></h3>
+                                <h3 className="text-2xl ml-1 sm:ml-6"><b>{playerData.position}</b></h3>
                             </div>
                             <div className="flex items-end">
                                 <h3 className="text-xl">Year: </h3>
-                                <h3 className="text-2xl ml-6 sm:ml-14"><b>{playerData.year == 1 ? "Freshman" : playerData.year == 2 ? "Sophomore" : playerData.year == 3 ? "Junior" : playerData.year == 4 ? "Senior" : "We can't find this data :("}</b></h3>
+                                <h3 className="text-2xl ml-9 sm:ml-14"><b>{playerData.year == 1 ? "Freshman" : playerData.year == 2 ? "Sophomore" : playerData.year == 3 ? "Junior" : playerData.year == 4 ? "Senior" : "We can't find this data :("}</b></h3>
                             </div>
                             <div className="flex items-end">
                                 <h3 className="text-xl">Team:</h3>
-                                <h3 className="text-2xl ml-6 sm:ml-12"><b>{playerData.team}</b></h3>
+                                <h3 className="text-2xl ml-7 sm:ml-12"><b>{playerData.team}</b></h3>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-center items-center mt-20">
+                <div className="flex justify-center items-center mt-10 sm:mt-15 md:mt-18 lg:mt-20">
                     <button className="hover:text-white hover:bg-gray-600 lg:text-2xl bg-gray-300 transition duration-150 ease-in-out focus:outline-white focus:ring-2 focus:ring-offset-2 ring-offset-indigo-700 focus:ring-white rounded border border-white text-black px-4 sm:px-20 py-1 sm:py-3 text-sm">Passing Yards</button>
                     <button className="hover:text-white hover:bg-gray-600 lg:text-2xl bg-gray-300 transition duration-150 ease-in-out focus:outline-white focus:ring-2 focus:ring-offset-2 ring-offset-indigo-700 focus:ring-white rounded border border-white text-black px-4 sm:px-20 py-1 sm:py-3 text-sm ml-6 sm:ml-10">Rushing Yards</button>
                 </div>
