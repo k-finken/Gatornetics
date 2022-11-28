@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Chart, ChartJS, ArcElement, Tooltip, Legend, Title, PieController } from 'chart.js';
-import { Doughnut, Pie } from 'react-chartjs-2';
+import { Chart, ChartJS, CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Tooltip, Legend, Title, PieController } from 'chart.js';
+import { Doughnut, Pie, Line } from 'react-chartjs-2';
 import Link from "next/link";
 import { prisma, PrismaClient } from '@prisma/client';
 
-Chart.register(ArcElement, Title, Legend, Tooltip, PieController);
+Chart.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Legend, Tooltip, PieController);
 const fetcher = (...args) => fetch(...args).then(res => res.json())
 
 function Index({foundPlayer}) {
@@ -14,7 +14,7 @@ function Index({foundPlayer}) {
         responsive: true,
         plugins: {
           legend: {
-            position: "bottom"
+            position: "bottom",
           },
           tooltip: {
             callbacks: {
@@ -37,8 +37,8 @@ function Index({foundPlayer}) {
                 family: "system-ui",
                 weight: "800"
             }
-          }
-        }
+          },
+        },
       };
 
     const dataPie = {
@@ -52,6 +52,77 @@ function Index({foundPlayer}) {
                 ],
                 hoverOffset: 2,
             },
+        ],
+    };
+
+    const lineOptions = {
+        responsive: true,
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function (tooltipItem) {
+                        const value = tooltipItem.dataset.data[tooltipItem.dataIndex];
+
+                        return `${value} yards`;
+                    }
+                }
+            },
+            legend: {
+                position: 'bottom',
+            },
+            title: {
+                display : true,
+                text: "Player Passing Yards",
+                color: '#66f',
+                font: {
+                    size: 34,
+                    family: "system-ui",
+                    weight: "800"
+                }
+            },
+        },
+        scales: {
+            y: {
+                position: "left",
+                ticks: {
+                    color: 'gray'
+                },
+                title: {
+                    display: true,
+                    text: "(yards)",
+                    color: 'gray',
+                    font: {
+                        size: 18,
+                        family: "system-ui",
+                        weight: "300"
+                    }
+                }
+            },
+            x: {
+                ticks: {
+                    color: 'gray'
+                }
+            }
+
+        }
+    };
+
+    const lineData = {
+        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
+        datasets: [
+            {
+                label: 'Existing Data',
+                data: [150, 140, 180, 110, 200, , , ],
+                borderColor: '#000',
+                backgroundColor: '#000',
+            },
+            {
+                label: 'Predicted Data',
+                data: [, , , , 200, 200, 150, 210],
+                borderColor: '#66f',
+                borderDash: [10, 10],
+                pointBackgroundColor: "transparent"
+            }
         ],
     };
     
@@ -74,6 +145,27 @@ function Index({foundPlayer}) {
                 <div className="mr-10 hidden lg:mt-0 lg:col-span-5 lg:flex"> 
                     <Pie data={dataPie} options={options}></Pie>
                 </div>
+            </div>
+            <div className="mt-20 flex justify-center items-center">
+                <h2 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white text-gray-200">How it works</h2>
+            </div>
+            <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+                <div className="ml-10 hidden lg:mt-0 lg:col-span-8 lg:flex">
+                    <Line data={lineData} options={lineOptions}></Line>
+                </div>
+                <div className="mr-10 mr-auto place-self-center lg:col-span-4">
+                    <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400">All player and team data is drawn directly from fact checked sources.</p>
+                    <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400">Data is run through machine learning analysis to predict future outcomes.</p>
+                    <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400">Updated every week, data is always up to date and reliable.</p>
+                </div>
+            </div>
+            <div className="mt-20 flex justify-center items-center">
+                <h2 className="mt-10 max-w-2xl mb-4 text-4xl font-bold tracking-tight leading-none md:text-4xl xl:text-5xl dark:text-white text-gray-200">About Us</h2>
+            </div>
+            <div className="flex justify-center items-center">
+                <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+                    Do we want to include something like this?
+                </p>
             </div>
             <div className="shadow-lg rounded-lg overflow-hidden">
             </div>
