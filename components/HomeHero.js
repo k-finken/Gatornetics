@@ -73,7 +73,7 @@ function Index({foundPlayer}) {
             title: {
                 display : true,
                 text: "Player Passing Yards",
-                color: '#66f',
+                color: "#fff",
                 font: {
                     size: 34,
                     family: "system-ui",
@@ -113,13 +113,13 @@ function Index({foundPlayer}) {
             {
                 label: 'Existing Data',
                 data: [150, 140, 180, 110, 200, , , ],
-                borderColor: '#000',
-                backgroundColor: '#000',
+                borderColor: '#fff',
+                backgroundColor: '#fff',
             },
             {
                 label: 'Predicted Data',
                 data: [, , , , 200, 200, 150, 210],
-                borderColor: '#66f',
+                borderColor: "#fff",
                 borderDash: [10, 10],
                 pointBackgroundColor: "transparent"
             }

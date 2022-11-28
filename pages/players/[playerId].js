@@ -51,7 +51,7 @@ const PlayerDetails = ({ playerData }) => {
                             </div>
                             <div className="flex items-end">
                                 <h3 className="text-xl">Weight:</h3>
-                                <h3 className="text-2xl ml-6 sm:ml-8">{playerData.weight}lbs</h3>
+                                <h3 className="text-2xl ml-6 sm:ml-8"><b>{playerData.weight}lbs</b></h3>
                             </div>
                             <div className="flex items-end">
                                 <h3 className="text-xl">Position:</h3>
