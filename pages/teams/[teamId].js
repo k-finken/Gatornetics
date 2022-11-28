@@ -38,17 +38,17 @@ const TeamDetails = ({ teamData }) => {
     return (
         <Layout>
             <div>
-                <div className="flex justify-center mt-5">
+                <div className="flex flex-wrap justify-center mt-5">
                     <img className={"flex h-200 bg-[" + teamData.color + "] mx-20 rounded-lg"} src={teamData.logos.split(',')[0].replace('[','').replaceAll("'", '')} width="350" height="400" />
                     <div className="flex flex-col mx-20 justify-right">
                         <div className="m-auto flex flex-col items-left text-gray-600 text-s">
                             <div className="flex items-end">
                                 <h3 className="text-xl">School:</h3>
-                                <h3 className="text-2xl ml-6 sm:ml-10"><b>{teamData.school}</b></h3>
+                                <h3 className="text-2xl ml-14"><b>{teamData.school}</b></h3>
                             </div>
                             <div className="flex items-end">
-                                <h3 className="text-xl">Conference</h3>
-                                <h3 className="text-2xl ml-6 sm:ml-10"><b>{teamData.conference}</b></h3>
+                                <h3 className="text-xl">Conference: </h3>
+                                <h3 className="text-2xl ml-3"><b>{teamData.conference}</b></h3>
                             </div>
                         </div>
                     </div>
