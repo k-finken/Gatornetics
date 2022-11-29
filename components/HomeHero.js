@@ -119,7 +119,7 @@ function Index({foundPlayer}) {
             {
                 label: 'Predicted Data',
                 data: [, , , , 200, 200, 150, 210],
-                borderColor: "#fff",
+                borderColor: "rgb(0, 94, 184)",
                 borderDash: [10, 10],
                 pointBackgroundColor: "transparent"
             }
