@@ -21,14 +21,25 @@ model players {
   weight       Int?
   homeCity     String? @db.VarChar(255)
   homeState    String? @db.VarChar(255)
+  posStat1     Json?
+  posStat2     Json?
+  pPic         String? @db.Text
 
   @@index([team_id], map: "teamID")
 }
 
 model teams {
-  id         Int    @id
-  school     String @db.VarChar(255)
-  conference String @db.VarChar(10)
-  color      String @db.VarChar(7)
-  logos      String @db.Text
+  id          Int     @id
+  school      String  @db.VarChar(255)
+  conference  String  @db.VarChar(10)
+  color       String  @db.VarChar(7)
+  logos       String  @db.Text
+  division    String? @db.VarChar(10)
+  wins        Int?
+  expecWins   Float?  @db.Float
+  recRank     Int?
+  talentScore Float?  @db.Float
+  losses      Int?
+  overOff     Float?  @db.Float
+  overDeff    Float?  @db.Float
 }
