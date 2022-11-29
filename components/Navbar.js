@@ -2,10 +2,16 @@ import { useState } from "react";
 import Link from 'next/link';
 import { prisma, PrismaClient } from '@prisma/client';
 import { useRouter } from 'next/router'
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { getAuth } from "firebase/auth";
+import { initFirebase } from "../firebase/firebaseApp";
 
 export default function NavBar({teams}) {
     const [navbar, setNavbar] = useState(false);
     const [searchInput, setSearchInput] = useState("");
+    initFirebase()
+    const auth = getAuth();
+    const [user, loading] = useAuthState(auth);
 
     const router = useRouter()
 
@@ -91,9 +97,14 @@ export default function NavBar({teams}) {
                             <li className="text-white hover:text-gray-500">
                                 <Link href="/faq">FAQ</Link>
                             </li>
-                            <li className="text-white hover:text-gray-500">
-                                <Link href="/signUp">Sign In</Link>
-                            </li>
+                            {/* //if not logged in show login */}
+                            {!user && <li className="text-white hover:text-gray-500">
+                                <Link href="/login">Login</Link>
+                            </li>}
+                            {/* //if logged in show profile */}
+                            {user && <li className="text-white hover:text-gray-500">
+                                <Link href="/profile">{user.displayName}</Link>
+                            </li>}
                         </ul>
                     </div>
                 </div>
