@@ -42,13 +42,13 @@ function Index({foundPlayer}) {
       };
 
     const dataPie = {
-        labels: ["Ohio State", "Georgia"],
+        labels: ["Michigan", "Georgia"],
         datasets: [
             {
-                data: [55, 45],
+                data: [47, 53],
                 backgroundColor: [
-                    "rgb(102, 102, 102)",
-                    "rgb(186, 12, 47)",
+                    "white",
+                    "#4b5563",
                 ],
                 hoverOffset: 2,
             },
@@ -73,7 +73,7 @@ function Index({foundPlayer}) {
             title: {
                 display : true,
                 text: "Player Passing Yards",
-                color: '#66f',
+                color: 'white',
                 font: {
                     size: 34,
                     family: "system-ui",
@@ -85,12 +85,12 @@ function Index({foundPlayer}) {
             y: {
                 position: "left",
                 ticks: {
-                    color: 'gray'
+                    color: 'white'
                 },
                 title: {
                     display: true,
                     text: "(yards)",
-                    color: 'gray',
+                    color: 'white',
                     font: {
                         size: 18,
                         family: "system-ui",
@@ -100,12 +100,12 @@ function Index({foundPlayer}) {
             },
             x: {
                 ticks: {
-                    color: 'gray'
+                    color: 'white'
                 }
             }
 
         }
-    };
+    }; 
 
     const lineData = {
         labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
@@ -113,13 +113,13 @@ function Index({foundPlayer}) {
             {
                 label: 'Existing Data',
                 data: [150, 140, 180, 110, 200, , , ],
-                borderColor: '#000',
-                backgroundColor: '#000',
+                borderColor: '#FFFFFF',
+                backgroundColor: '#FFFFFF',
             },
             {
                 label: 'Predicted Data',
                 data: [, , , , 200, 200, 150, 210],
-                borderColor: '#66f',
+                borderColor: 'rgb(42, 230, 0)',
                 borderDash: [10, 10],
                 pointBackgroundColor: "transparent"
             }
