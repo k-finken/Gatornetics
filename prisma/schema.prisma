@@ -23,7 +23,7 @@ model players {
   homeState    String? @db.VarChar(255)
   posStat1     Json?
   posStat2     Json?
-  pPic         String? @db.Text
+  Conference   String? @db.VarChar(30)
 
   @@index([team_id], map: "teamID")
 }
@@ -33,7 +33,6 @@ model teams {
   school      String  @db.VarChar(255)
   conference  String  @db.VarChar(10)
   color       String  @db.VarChar(7)
-  logos       String  @db.Text
   division    String? @db.VarChar(10)
   wins        Int?
   expecWins   Float?  @db.Float
@@ -42,4 +41,11 @@ model teams {
   losses      Int?
   overOff     Float?  @db.Float
   overDeff    Float?  @db.Float
+  confWins    Int?
+  confLosses  Int?
+  homeW       Int?
+  homeL       Int?
+  awayW       Int?
+  awayL       Int?
+  playerIDS   Json?
 }
