@@ -49,12 +49,18 @@ export async function getStaticProps(context) {
         }
     })
 
+    const teamData = await prisma.teams.findFirst({
+        where: {
+            id: playerData.team_id,
+        }
+    })
+
     return {
-        props: { playerData }
+        props: { playerData, teamData }
     }
 }
 
-const PlayerDetails = ({ playerData }) => {
+const PlayerDetails = ({ playerData, teamData }) => {
     const [graphNumber, setGraphNumber] = useState(1);
 
     const playerPosStat1 = playerData.posStat1[0].replace('[', '').replace(']', '').split(', ');
@@ -180,15 +186,14 @@ const PlayerDetails = ({ playerData }) => {
             break;
     }
 
-
     const playerGraphData1 = {
         labels,
         datasets: [
             {
                 label: label1Value,
                 data: playerGraphStat1,
-                borderColor: 'rgb(0, 94, 184)',
-                backgroundColor: 'rgba(0, 94, 184)',
+                borderColor: teamData.color,
+                backgroundColor: teamData.color,
             },
         ],
     };
@@ -199,8 +204,8 @@ const PlayerDetails = ({ playerData }) => {
             {
                 label: label2Value,
                 data: playerGraphStat2,
-                borderColor: 'rgb(0, 94, 184)',
-                backgroundColor: 'rgba(0, 94, 184)',
+                borderColor: teamData.color,
+                backgroundColor: teamData.color,
             },
         ],
     };
