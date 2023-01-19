@@ -48,4 +48,5 @@ model teams {
   awayW       Int?
   awayL       Int?
   playerIDS   Json?
+  abbr        String? @db.VarChar(5)
 }

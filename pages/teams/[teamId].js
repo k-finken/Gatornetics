@@ -24,6 +24,7 @@ ChartJS.register(
     Title,
     Tooltip,
 );
+import Image from 'next/image';
 
 //this function generates all the paths that the dynamic query can take
 export async function getStaticPaths() {
@@ -139,7 +140,7 @@ const TeamDetails = ({ teamData, divisionTeamData, allTeamData }) => {
         <Layout>
             <div>
                 <div className="flex flex-wrap justify-center mt-5">
-                    <img className={"flex h-200 bg-[" + teamData.color + "] mx-20 rounded-lg"} src={teamData.logos.split(',')[0].replace('[', '').replaceAll("'", '')} width="350" height="400" />
+                    <Image className={"flex h-200 bg-[" + teamData.color + "] mx-20 rounded-lg"} src={"/teams/" + teamData.abbr + ".tif"} width="400" height="400" priority />
                     <div className="flex flex-col mx-20 justify-right">
                         <div className="m-auto flex flex-col items-left text-white text-s">
                             <div className="flex items-end">
