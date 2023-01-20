@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { prisma, PrismaClient } from '@prisma/client';
 import Layout from '../../components/Layout'
+import PlayersDropdown from '../../components/PlayersDropdown';
 import React from 'react';
 import {
     Chart as ChartJS,
@@ -60,12 +61,24 @@ export async function getStaticProps(context) {
 
     const allTeamData = await prisma.teams.findMany();
 
+    const allPlayers = await prisma.players.findMany({
+        where: {
+            team_id: teamId,
+        },
+        select: {
+            id:true,
+            firstName:true,
+            lastName:true,
+        }
+    })
+    allPlayers.sort((a, b) => (a.lastName > b.lastName ? 1 : -1));
+
     return {
-        props: { teamData, divisionTeamData, allTeamData }
+        props: { teamData, divisionTeamData, allTeamData, allPlayers }
     }
 }
 
-const TeamDetails = ({ teamData, divisionTeamData, allTeamData }) => {
+const TeamDetails = ({ teamData, divisionTeamData, allTeamData, allPlayers }) => {
 
     let teamIndex = 0;
     let Index = 0;
@@ -171,6 +184,7 @@ const TeamDetails = ({ teamData, divisionTeamData, allTeamData }) => {
                                 <h3 className="text-xl">Overall Defensive Score: </h3>
                                 <h3 className="text-2xl ml-3"><b>{teamData.overDeff}</b></h3>
                             </div>
+                            <div className="flex items-end"><PlayersDropdown teamArray={allPlayers} title="Players"></PlayersDropdown></div>
                         </div>
                     </div>
                 </div>

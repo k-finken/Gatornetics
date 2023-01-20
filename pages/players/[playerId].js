@@ -1,5 +1,6 @@
 import { prisma, PrismaClient } from '@prisma/client';
 import Layout from '../../components/Layout';
+import PlayersDropdown from '../../components/PlayersDropdown';
 import React, { useState } from 'react';
 import {
     Chart as ChartJS,
@@ -12,7 +13,7 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import Image from 'next/image';
+
 
 ChartJS.register(
     CategoryScale,
@@ -49,12 +50,24 @@ export async function getStaticProps(context) {
         }
     })
 
+    const playerTeam = await prisma.players.findMany({
+        where: {
+            team_id: playerData?.team_id,
+        },
+        select: {
+            id:true,
+            firstName:true,
+            lastName:true,
+        }
+    })
+    playerTeam.sort((a, b) => (a.lastName > b.lastName ? 1 : -1));
+
     return {
-        props: { playerData }
+        props: { playerTeam, playerData }
     }
 }
 
-const PlayerDetails = ({ playerData }) => {
+const PlayerDetails = ({ playerData, playerTeam }) => {
     const [graphNumber, setGraphNumber] = useState(1);
 
     const playerPosStat1 = playerData.posStat1[0].replace('[', '').replace(']', '').split(', ');
@@ -257,9 +270,9 @@ const PlayerDetails = ({ playerData }) => {
         <Layout>
             <div>
                 <div className="flex flex-wrap justify-center mt-5">
-                    <Image src={"/players/" + playerData.id + ".tif"} height={254} width={350} priority/>
+                    <img className="flex h-200 mx-20 rounded-lg" src={playerData.pPic} width="350" height="400" />
                     <div className="flex flex-col mx-20 justify-right">
-                        <div className="mt-16 m-auto flex flex-col items-left text-white text-s">
+                        <div className="m-auto flex flex-col items-left text-white text-s">
                             <div className="flex items-end">
                                 <h3 className="text-xl">Name:</h3>
                                 <h3 className="text-2xl ml-5 sm:ml-10"><b>{playerData.firstName} {playerData.lastName}</b></h3>
@@ -283,6 +296,9 @@ const PlayerDetails = ({ playerData }) => {
                             <div className="flex items-end">
                                 <h3 className="text-xl">Team:</h3>
                                 <h3 className="text-2xl ml-7 sm:ml-12"><b>{playerData.team}</b></h3>
+                            </div>
+                            <div className="flex items-end text-black">
+                                <PlayersDropdown teamArray={playerTeam} title="Teammates"></PlayersDropdown>
                             </div>
                         </div>
                     </div>
