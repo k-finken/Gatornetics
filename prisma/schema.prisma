@@ -26,6 +26,9 @@ model players {
   Conference   String? @db.VarChar(30)
 
   @@index([team_id], map: "teamID")
+  @@fulltext([firstName])
+  @@fulltext([lastName])
+  @@fulltext([firstName, lastName])
 }
 
 model teams {

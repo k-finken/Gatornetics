@@ -26,21 +26,8 @@ ChartJS.register(
 );
 import Image from 'next/image';
 
-//this function generates all the paths that the dynamic query can take
-export async function getStaticPaths() {
-    const prisma = new PrismaClient()
-    const teams = await prisma.teams.findMany()
-
-    const paths = teams.map((team) => ({
-        params: { teamId: team.id.toString() }
-    }))
-
-    return { paths, fallback: false }
-}
-
-
 //this function gathers the data from the player given in the path
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
     const { params } = context;
     const teamId = parseInt(params.teamId);
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Link from 'next/link';
 import { prisma, PrismaClient } from '@prisma/client';
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 
 export default function NavBar({teams}) {
     const [navbar, setNavbar] = useState(false);
@@ -14,10 +14,25 @@ export default function NavBar({teams}) {
         setSearchInput(e.target.value);
     };
 
-    const makeSearch = (e) => {
+    async function makeSearch (e) {
         e.preventDefault();
         setSearchInput(e.target.value);
-        router.push("/players/" + searchInput);
+        console.log(searchInput)
+        const searchResultArray = await search(searchInput);
+        console.log(searchResultArray[0]);
+        const routeToPush = "/players/" + searchResultArray[0].id;
+        console.log(routeToPush);
+        router.push(routeToPush);
+    }
+
+    async function search(query) {
+        const apiRoute = '/api/search?queryString=' + query;
+        let returnData;
+        await fetch(apiRoute, {
+            method: 'GET',
+        }).then((response) => response.json()).then((data) => returnData = data);
+        // console.log(returnData);
+        return returnData;
     }
 
     return (
