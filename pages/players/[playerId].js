@@ -12,7 +12,7 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-
+import Image from 'next/image';
 
 ChartJS.register(
     CategoryScale,
@@ -262,9 +262,9 @@ const PlayerDetails = ({ playerData, teamData }) => {
         <Layout>
             <div>
                 <div className="flex flex-wrap justify-center mt-5">
-                    <img className="flex h-200 mx-20 rounded-lg" src={playerData.pPic} width="350" height="400" />
+                    <Image src={"/players/" + playerData.id + ".tif"} height={254} width={350} priority/>
                     <div className="flex flex-col mx-20 justify-right">
-                        <div className="m-auto flex flex-col items-left text-white text-s">
+                        <div className="mt-16 m-auto flex flex-col items-left text-white text-s">
                             <div className="flex items-end">
                                 <h3 className="text-xl">Name:</h3>
                                 <h3 className="text-2xl ml-5 sm:ml-10"><b>{playerData.firstName} {playerData.lastName}</b></h3>
