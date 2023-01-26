@@ -24,20 +24,20 @@ ChartJS.register(
 );
 
 //this function generates all the paths that the dynamic query can take
-export async function getStaticPaths() {
-    const prisma = new PrismaClient()
-    const players = await prisma.players.findMany()
+// export async function getStaticPaths() {
+//     const prisma = new PrismaClient()
+//     const players = await prisma.players.findMany()
 
-    const paths = players.map((player) => ({
-        params: { playerId: player.id.toString() }
-    }))
+//     const paths = players.map((player) => ({
+//         params: { playerId: player.id.toString() }
+//     }))
 
-    return { paths, fallback: false }
-}
+//     return { paths, fallback: false }
+// }
 
 
 //this function gathers the data from the player given in the path
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
     const { params } = context;
     const playerId = parseInt(params.playerId);
 
@@ -257,7 +257,7 @@ const PlayerDetails = ({ playerData }) => {
         <Layout>
             <div>
                 <div className="flex flex-wrap justify-center mt-5">
-                    <Image src={"/players/" + playerData.id + ".tif"} height={254} width={350} priority/>
+                    <Image src={playerData.imgLinx} height={254} width={350} priority/>
                     <div className="flex flex-col mx-20 justify-right">
                         <div className="mt-16 m-auto flex flex-col items-left text-white text-s">
                             <div className="flex items-end">

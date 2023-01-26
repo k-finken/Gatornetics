@@ -27,20 +27,20 @@ ChartJS.register(
 import Image from 'next/image';
 
 //this function generates all the paths that the dynamic query can take
-export async function getStaticPaths() {
-    const prisma = new PrismaClient()
-    const teams = await prisma.teams.findMany()
+// export async function getStaticPaths() {
+//     const prisma = new PrismaClient()
+//     const teams = await prisma.teams.findMany()
 
-    const paths = teams.map((team) => ({
-        params: { teamId: team.id.toString() }
-    }))
+//     const paths = teams.map((team) => ({
+//         params: { teamId: team.id.toString() }
+//     }))
 
-    return { paths, fallback: false }
-}
+//     return { paths, fallback: false }
+// }
 
 
 //this function gathers the data from the player given in the path
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
     const { params } = context;
     const teamId = parseInt(params.teamId);
 
@@ -54,18 +54,19 @@ export async function getStaticProps(context) {
 
     const divisionTeamData = await prisma.teams.findMany({
         where: {
+            conference: teamData.conference,
             division: teamData.division,
         }
     });
 
-    const allTeamData = await prisma.teams.findMany();
+    // const allTeamData = await prisma.teams.findMany();
 
     return {
-        props: { teamData, divisionTeamData, allTeamData }
+        props: { teamData, divisionTeamData}
     }
 }
 
-const TeamDetails = ({ teamData, divisionTeamData, allTeamData }) => {
+const TeamDetails = ({ teamData, divisionTeamData}) => {
 
     let teamIndex = 0;
     let Index = 0;
@@ -140,7 +141,7 @@ const TeamDetails = ({ teamData, divisionTeamData, allTeamData }) => {
         <Layout>
             <div>
                 <div className="flex flex-wrap justify-center mt-5">
-                    <Image className={"flex h-200 bg-[" + teamData.color + "] mx-20 rounded-lg"} src={"/teams/" + teamData.abbr + ".tif"} width="400" height="400" priority />
+                    <Image className={"flex h-200 mx-20 rounded-lg"} src={teamData.imgLinx} width="400" height="400" priority />
                     <div className="flex flex-col mx-20 justify-right">
                         <div className="m-auto flex flex-col items-left text-white text-s">
                             <div className="flex items-end">

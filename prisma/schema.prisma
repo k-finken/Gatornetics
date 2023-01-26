@@ -16,7 +16,7 @@ model players {
   team         String  @db.VarChar(255)
   year         Int
   position     String  @db.VarChar(2)
-  jerseyNumber String  @db.VarChar(2)
+  jerseyNumber String? @db.VarChar(3)
   height       Int?
   weight       Int?
   homeCity     String? @db.VarChar(255)
@@ -24,14 +24,18 @@ model players {
   posStat1     Json?
   posStat2     Json?
   Conference   String? @db.VarChar(30)
+  imgLinx      String? @db.Text
 
   @@index([team_id], map: "teamID")
+  @@fulltext([firstName])
+  @@fulltext([firstName, lastName])
+  @@fulltext([lastName])
 }
 
 model teams {
   id          Int     @id
   school      String  @db.VarChar(255)
-  conference  String  @db.VarChar(10)
+  conference  String? @db.VarChar(50)
   color       String  @db.VarChar(7)
   division    String? @db.VarChar(10)
   wins        Int?
@@ -49,4 +53,5 @@ model teams {
   awayL       Int?
   playerIDS   Json?
   abbr        String? @db.VarChar(5)
+  imgLinx     String? @db.Text
 }
