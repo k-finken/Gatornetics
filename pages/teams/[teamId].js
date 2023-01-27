@@ -183,7 +183,7 @@ const TeamDetails = ({ teamData, divisionTeamData}) => {
                     <h1 className="mt-10 flex justify-center text-3xl font-bold">Charts go here</h1>
                 </div> */}
                 <div className='mx-96'>
-                    <Bar options={options} data={data} />
+                    <Bar options={options} data={data />
                 </div>
             </div>
         </Layout>
