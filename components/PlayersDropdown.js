@@ -27,7 +27,7 @@ export default function PlayersDropdown({ teamArray, title }) {
             <Menu.Items className='absolute mt-12 h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
                 <ul>
                     { teamArray.map((player) => (
-                        <Menu.Item as='li'>
+                        <Menu.Item as='li' key={player}>
                             {({ active }) => (
                                 <Link href={'/players/' + player.id.toString()}>
                                     <div className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{player.firstName} {player.lastName}</div>
