@@ -11,6 +11,7 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
+import PlayersDropdown from '../../components/PlayersDropdown';
 import { Line } from 'react-chartjs-2';
 import Image from 'next/image';
 
@@ -55,12 +56,25 @@ export async function getServerSideProps(context) {
         }
     })
 
+    const playerTeam = await prisma.players.findMany({
+        where: {
+            team_id: playerData?.team_id,
+        },
+        select: {
+            id:true,
+            firstName:true,
+            lastName:true,
+        }
+    })
+    playerTeam.sort((a, b) => (a.lastName > b.lastName ? 1 : -1));
+
+
     return {
-        props: { playerData, teamData }
+        props: { playerData, teamData, playerTeam }
     }
 }
 
-const PlayerDetails = ({ playerData, teamData }) => {
+const PlayerDetails = ({ playerData, teamData, playerTeam }) => {
     const [graphNumber, setGraphNumber] = useState(1);
 
     const playerPosStat1 = playerData.posStat1[0].replace('[', '').replace(']', '').split(', ');
@@ -288,6 +302,9 @@ const PlayerDetails = ({ playerData, teamData }) => {
                             <div className="flex items-end">
                                 <h3 className="text-xl">Team:</h3>
                                 <h3 className="text-2xl ml-7 sm:ml-12"><b>{playerData.team}</b></h3>
+                            </div>
+                            <div className="flex items-end text-black">
+                                <PlayersDropdown teamArray={playerTeam} title="Teammates"></PlayersDropdown>
                             </div>
                         </div>
                     </div>

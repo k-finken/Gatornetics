@@ -54,4 +54,6 @@ model teams {
   playerIDS   Json?
   abbr        String? @db.VarChar(5)
   imgLinx     String? @db.Text
+
+  @@fulltext([school])
 }
