@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.7",
+    "@headlessui/tailwindcss": "^0.1.2",
     "@prisma/client": "^4.5.0",
     "chart.js": "^4.0.1",
     "dasherize": "^2.0.0",
