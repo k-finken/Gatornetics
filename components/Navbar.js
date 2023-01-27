@@ -86,7 +86,10 @@ export default function NavBar({teams}) {
                     >
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
                             <li className="text-white hover:text-gray-500">
-                                <Link href="/machine-learning">ML Analysis</Link>
+                                <Link href="/players/4429084">Players</Link>
+                            </li>
+                            <li className="text-white hover:text-gray-500">
+                                <Link href="/teams/57">Teams</Link>
                             </li>
                             <li className="text-white hover:text-gray-500">
                                 <Link href="/faq">FAQ</Link>

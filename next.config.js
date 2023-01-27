@@ -7,7 +7,6 @@ const nextConfig = {
       {
         protocol: 'https', 
         hostname: 'a.espncdn.com',
-        port: '',
         pathname: '/**'
       },
     ],
