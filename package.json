@@ -12,6 +12,7 @@
     "@headlessui/react": "^1.7.7",
     "@headlessui/tailwindcss": "^0.1.2",
     "@prisma/client": "^4.5.0",
+    "@react-css/grid": "^2.1.0",
     "chart.js": "^4.0.1",
     "dasherize": "^2.0.0",
     "next": "12.3.1",
