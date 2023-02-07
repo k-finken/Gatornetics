@@ -146,7 +146,9 @@ function Index({foundPlayer}) {
                     <Pie data={dataPie} options={options}></Pie>
                 </div>
             </div>
+
             <TeamLeaderboard />
+            
             <div className="mt-20 flex justify-center items-center">
                 <h2 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white text-gray-200">How it works</h2>
             </div>

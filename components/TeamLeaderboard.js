@@ -5,18 +5,21 @@ export default function TeamLeaderboard() {
 
     const data = [
         {
+            rank: 1,
             talentScore: 1016.79,
             name: "Alabama",
             image: "https://a.espncdn.com/i/teamlogos/ncaa/500/333.png",
             conference: "SEC"
         },
         {
+            rank: 2,
             talentScore: 989.76,
             name: "Georgia",
             image: "https://a.espncdn.com/i/teamlogos/ncaa/500/61.png",
             conference: "SEC"
         },
         {
+            rank: 3,
             talentScore: 983.14,
             name: "Ohio State",
             image: "https://a.espncdn.com/i/teamlogos/ncaa/500/194.png",
@@ -25,53 +28,28 @@ export default function TeamLeaderboard() {
     ]
 
     return (
-        <section className="grid lg:grid-cols-5 lg:grid-rows-4">
-            <div className="lg:row-span-1">
-                <div className="lg:col-span-1">
-                    <label>Rank</label>
-                </div>
-                <div className="lg:col-span-1">
-                    <label>Team Name</label>
-                </div>
-                <div className="lg:col-span-1">
-                    <label></label>
-                </div>
-                <div className="ladder-nav--results-col">
-                    <label>P2</label>
-                </div>
-                <div className="ladder-nav--results-col">
-                    <label>GP</label>
-                </div>
-                <div className="ladder-nav--results-col">
-                    <label>PTS</label>
-                </div>
-            </div>
-            <div className="lg:col-span-1">
+        <table id="rankings" class="leaderboard-results" width="100%">
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Team</th>
+                    <th>Talent Score</th>
+                    <th>Conference</th>
+                </tr>
+            </thead>
+            <tbody className='flex border align-items-center'>
                 <ul>
-                    { data.map((team) => (
-                        <div className="lg:row-span-1" key={team}>
-                            <div className="results-col">
-                                <span className="results-rank"><span className="positions">1</span></span>
-                            </div>
-                            <div className="results-col">
-                                <span className="results-team">Nihilum</span>
-                            </div>
-                            <div className="results-col">
-                                <span className="results-p1">Hydramist</span>
-                            </div>
-                            <div className="results-col">
-                                <span className="results-p2">Reckful</span>
-                            </div>
-                            <div className="results-col">
-                                <span className="results-gp">7</span>
-                            </div>
-                            <div className="results-col">
-                                <span className="results-pts">512</span>
-                            </div>
-                        </div>
-                    ))}
+                    {
+                        data.map((team) => (
+                            <tr as="li" key={team}>
+                                <td>{team.rank}</td>
+                                <td>{team.name}</td>
+                                <td>{team.talentScore}</td>
+                                <td>{team.conference}</td>
+                            </tr>
+                    )) }
                 </ul>
-            </div>
-        </section>
+            </tbody>
+        </table>
     )
 }
