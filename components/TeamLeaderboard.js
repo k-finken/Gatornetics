@@ -28,8 +28,8 @@ export default function TeamLeaderboard() {
     ]
 
     return (
-        <table id="rankings" class="leaderboard-results" width="100%">
-            <thead>
+        <table id="rankings" className="leaderboard-results" width="100%">
+            <thead className='border'>
                 <tr>
                     <th>Rank</th>
                     <th>Team</th>
@@ -37,7 +37,7 @@ export default function TeamLeaderboard() {
                     <th>Conference</th>
                 </tr>
             </thead>
-            <tbody className='flex border align-items-center'>
+            <tbody className='border'>
                 <ul>
                     {
                         data.map((team) => (
