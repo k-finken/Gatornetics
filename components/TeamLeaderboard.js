@@ -1,5 +1,5 @@
 import React from 'react';
-import Grid from '@react-css/grid';
+import Image from 'next/image';
 
 export default function TeamLeaderboard() {
 
@@ -28,28 +28,64 @@ export default function TeamLeaderboard() {
     ]
 
     return (
-        <table id="rankings" className="leaderboard-results" width="100%">
-            <thead className='border'>
-                <tr>
-                    <th>Rank</th>
-                    <th>Team</th>
-                    <th>Talent Score</th>
-                    <th>Conference</th>
-                </tr>
-            </thead>
-            <tbody className='border'>
-                <ul>
-                    {
-                        data.map((team) => (
-                            <tr as="li" key={team}>
-                                <td>{team.rank}</td>
-                                <td>{team.name}</td>
-                                <td>{team.talentScore}</td>
-                                <td>{team.conference}</td>
-                            </tr>
-                    )) }
-                </ul>
-            </tbody>
-        </table>
+        <div className="grid grid-cols-5 grid-rows-4 justify-items-center bg-slate-600 ml-28 mr-28 divide-x divide-y">
+            <div className="col-start-2">
+                Rank
+            </div>
+            <div className="border border-sky-500">
+                Team Name
+            </div>
+            <div className="flex outline-4">
+                Talent Score
+            </div>
+            <div className="">
+                Conference
+            </div>
+            <div className="">
+                <Image src={data[0].image} height={30} width={30}></Image>
+            </div>
+            <div className="">
+                {data[0].rank}
+            </div>
+            <div className="">
+                {data[0].name}
+            </div>
+            <div className="">
+                {data[0].talentScore}
+            </div>
+            <div className="">
+                {data[0].conference}
+            </div>
+            <div className="">
+                <Image src={data[1].image} height={30} width={30}></Image>
+            </div>
+            <div className="">
+                {data[1].rank}
+            </div>
+            <div className="">
+                {data[1].name}
+            </div>
+            <div className="">
+                {data[1].talentScore}
+            </div>
+            <div className=""> 
+                {data[1].conference}
+            </div>
+            <div className="">
+                <Image src={data[2].image} height={30} width={30}></Image>
+            </div>
+            <div className="">
+                {data[2].rank}
+            </div>
+            <div className="">
+                {data[2].name}
+            </div>
+            <div className="">
+                {data[2].talentScore}
+            </div>
+            <div className="">
+                {data[2].conference}
+            </div>
+        </div>
     )
 }
