@@ -38,7 +38,7 @@ export default function TeamLeaderboard() {
                 </div>           
                 <ul>
                     {data.map((team) => (
-                        <div className="grid grid-cols-5 border ml-28 mr-28 rounded-md bg-gray-700 items-center text-lg"> 
+                        <div className="grid grid-cols-5 border ml-28 mr-28 rounded-md bg-gray-700 items-center text-lg font-medium"> 
                             <div className="justify-self-center"><Image src={team.image} height={40} width={30}></Image></div>             
                             <h2>{team.rank}</h2>                    
                             <h2>{team.name}</h2>                    
