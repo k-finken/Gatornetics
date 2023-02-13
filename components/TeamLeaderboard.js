@@ -28,64 +28,26 @@ export default function TeamLeaderboard() {
     ]
 
     return (
-        <div className="grid grid-cols-5 grid-rows-4 justify-items-center bg-slate-600 ml-28 mr-28 divide-x divide-y">
-            <div className="col-start-2">
-                Rank
-            </div>
-            <div className="border border-sky-500">
-                Team Name
-            </div>
-            <div className="flex outline-4">
-                Talent Score
-            </div>
-            <div className="">
-                Conference
-            </div>
-            <div className="">
-                <Image src={data[0].image} height={30} width={30}></Image>
-            </div>
-            <div className="">
-                {data[0].rank}
-            </div>
-            <div className="">
-                {data[0].name}
-            </div>
-            <div className="">
-                {data[0].talentScore}
-            </div>
-            <div className="">
-                {data[0].conference}
-            </div>
-            <div className="">
-                <Image src={data[1].image} height={30} width={30}></Image>
-            </div>
-            <div className="">
-                {data[1].rank}
-            </div>
-            <div className="">
-                {data[1].name}
-            </div>
-            <div className="">
-                {data[1].talentScore}
-            </div>
-            <div className=""> 
-                {data[1].conference}
-            </div>
-            <div className="">
-                <Image src={data[2].image} height={30} width={30}></Image>
-            </div>
-            <div className="">
-                {data[2].rank}
-            </div>
-            <div className="">
-                {data[2].name}
-            </div>
-            <div className="">
-                {data[2].talentScore}
-            </div>
-            <div className="">
-                {data[2].conference}
-            </div>
+        <div>
+            <>            
+                <div className="grid grid-cols-5 ml-28 mr-28 rounded-md text-xl mt-10 font-bold text-gray-200">  
+                    <h1 className="col-start-2">Rank</h1>                
+                    <h1>Team</h1>                
+                    <h1>Talent Score</h1>                
+                    <h1>Conference</h1>            
+                </div>           
+                <ul>
+                    {data.map((team) => (
+                        <div className="grid grid-cols-5 border ml-28 mr-28 rounded-md bg-gray-700 items-center text-lg"> 
+                            <div className="justify-self-center"><Image src={team.image} height={40} width={30}></Image></div>             
+                            <h2>{team.rank}</h2>                    
+                            <h2>{team.name}</h2>                    
+                            <h2>{team.talentScore}</h2>                    
+                            <h2>{team.conference}</h2>                
+                        </div>        
+                    ))}
+                </ul>
+            </>
         </div>
     )
 }
