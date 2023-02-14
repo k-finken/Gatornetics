@@ -276,7 +276,7 @@ const PlayerDetails = ({ playerData, teamData, playerTeam }) => {
         <Layout>
             <div>
                 <div className="flex flex-wrap justify-center mt-5">
-                    <Image src={playerData.imgLinx} height={254} width={350} priority/>
+                    <Image alt='player-image' src={playerData.imgLinx} height={254} width={350} priority/>
                     <div className="flex flex-col mx-20 justify-right">
                         <div className="mt-16 m-auto flex flex-col items-left text-white text-s">
                             <div className="flex items-end">
