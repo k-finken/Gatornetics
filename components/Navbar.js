@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Link from 'next/link';
 import { prisma, PrismaClient } from '@prisma/client';
 import { useRouter } from 'next/router'
@@ -19,6 +19,11 @@ export default function NavBar({teams}) {
     const [selectedSearchOption, setSearchOption] = useState(searchOptions[0]);
     const [queryItems, setQueryItems] = useState([]);
     const [expanded, setExpanded] = useState(false);
+
+    useEffect(() => {
+        document.body.addEventListener('click', close);
+        return () => document.body.removeEventListener('click', close)
+    }, [])
 
     function expand() {
         setExpanded(true);
@@ -144,11 +149,11 @@ export default function NavBar({teams}) {
                             <svg aria-hidden="true" className="w-5 h-5 text-gray-800 dark:text-gray-800" fillRule="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd"></path></svg>
                         </div>
                         <input onInput={handleSearch} type="text" id="simple-search" className=" bg-white border border-gray-800 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" value={searchInput}/>
-                        <div onFocus={expand} onBlur={close} onClick={select} className="absolute h-auto w-full rounded-md bg-white z-10">
+                        <div onFocus={expand} onClick={select} className="absolute h-auto w-full rounded-md bg-white z-10">
                             {selectedSearchOption.id == 1 && expanded &&
                                 queryItems.map((item, index) => (
                                     <Link href={"/players/" + item.id} key={index} className="flex p-4 rounded-lg my-1">
-                                        <div className="flex p-3 font-bold hover:bg-gray-400 hover:cursor-pointer">
+                                        <div className="flex p-3 font-bold hover:bg-gray-400 hover:cursor-pointer hover:scale-[1.02] transition-all">
                                             <div className="ml-8"/>
                                             <Image className="ml-20" quality={100} alt='player image' placeholder={UserIcon} src={item.imgLinx} height={50} width={70} priority/>
                                             <div className="my-auto ml-8">{item.firstName} {item.lastName}</div>
