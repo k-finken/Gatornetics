@@ -25,20 +25,20 @@ ChartJS.register(
 );
 
 //this function generates all the paths that the dynamic query can take
-export async function getStaticPaths() {
-    const prisma = new PrismaClient()
-    const players = await prisma.players.findMany()
+// export async function getStaticPaths() {
+//     const prisma = new PrismaClient()
+//     const players = await prisma.players.findMany()
 
-    const paths = players.map((player) => ({
-        params: { playerId: player.id.toString() }
-    }))
+//     const paths = players.map((player) => ({
+//         params: { playerId: player.id.toString() }
+//     }))
 
-    return { paths, fallback: false }
-}
+//     return { paths, fallback: false }
+// }
 
 
 //this function gathers the data from the player given in the path
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
     const { params } = context;
     const playerId = parseInt(params.playerId);
 
