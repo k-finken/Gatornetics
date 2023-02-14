@@ -30,18 +30,20 @@ export default function TeamLeaderboard() {
     return (
         <div>
             <>            
-                <div className="grid grid-cols-5 ml-28 mr-28 rounded-md text-xl mt-10 font-bold text-gray-200">  
-                    <h1 className="col-start-2">Rank</h1>                
+                <div className="grid grid-cols-4 ml-28 mr-28 rounded-md text-3xl mt-10 font-bold text-gray-200 justify-items-center">  
+                    <h1>Rank</h1>                
                     <h1>Team</h1>                
                     <h1>Talent Score</h1>                
                     <h1>Conference</h1>            
                 </div>           
                 <ul>
                     {data.map((team) => (
-                        <div className="grid grid-cols-5 border ml-28 mr-28 rounded-md bg-gray-700 items-center text-lg font-medium" key={team}> 
-                            <div className="justify-self-center"><Image src={team.image} height={40} width={30}></Image></div>             
-                            <h2>{team.rank}</h2>                    
-                            <h2>{team.name}</h2>                    
+                        <div className="grid grid-cols-4 border ml-28 mr-28 rounded-md bg-gray-700 items-center text-lg font-medium justify-items-center my-2 h-12 text-gray-200" key={team}> 
+                            <h2>{team.rank}</h2>
+                            <div className="flex justify-self-start ml-20">
+                                <Image src={team.image} height={30} width={30}></Image>
+                                <h2 className="self-center ml-5">{team.name}</h2>  
+                            </div>                                                   
                             <h2>{team.talentScore}</h2>                    
                             <h2>{team.conference}</h2>                
                         </div>        
