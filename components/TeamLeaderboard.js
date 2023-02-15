@@ -1,9 +1,23 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient()
 
 export default function TeamLeaderboard() {
 
+    const dataObjs = prisma.teams.findMany({
+        orderBy: [
+            {
+                talentScore: 'asc',
+            }
+        ],
+        take: 3,
+    });
+
+    const data = Object.entries(dataObjs);
+
+    /*
     const data = [
         {
             id: 333,
@@ -30,6 +44,7 @@ export default function TeamLeaderboard() {
             conference: "Big Ten"
         }
     ]
+    */
 
     return (
         <div>
@@ -42,7 +57,7 @@ export default function TeamLeaderboard() {
                 </div>           
                 <ul>
                     {data.map((team) => (
-                        <Link href={'/teams/' + team.id.toString()} key={team}>
+                        <Link href={'/teams/' + team.id.toString()} key={team.id}>
                         <div className="grid grid-cols-4 border ml-28 mr-28 rounded-md bg-gray-700 items-center text-lg font-medium justify-items-center my-2 h-12 text-gray-200 hover:cursor-pointer hover:text-gray-300 hover:bg-gray-600"> 
                             <h2>{team.rank}</h2>
                             <div className="flex justify-self-start ml-20">
