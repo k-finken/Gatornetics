@@ -2,20 +2,23 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient()
+import { useRouter } from 'next/router'
 
 export default function TeamLeaderboard() {
 
-    const dataObjs = prisma.teams.findMany({
-        orderBy: [
-            {
-                talentScore: 'asc',
-            }
-        ],
-        take: 3,
-    });
+    const router = useRouter()
 
-    const data = Object.entries(dataObjs);
+    const [queryItems, setQueryItems] = useState([]);
+
+    async function searchTopTeams() {
+        const apiRoute = '/api/searchTopTeams';
+        let returnData;
+        await fetch(apiRoute, {
+            method: 'GET',
+        }).then((response) => response.json()).then((data) => returnData = data);
+        // console.log(returnData);
+        setQueryItems(returnData);
+    }
 
     /*
     const data = [
@@ -55,8 +58,8 @@ export default function TeamLeaderboard() {
                     <h1>Talent Score</h1>                
                     <h1>Conference</h1>            
                 </div>           
-                <ul>
-                    {data.map((team) => (
+                <ul onLoad={searchTopTeams}>
+                    {queryItems.map((team) => (
                         <Link href={'/teams/' + team.id.toString()} key={team.id}>
                         <div className="grid grid-cols-4 border ml-28 mr-28 rounded-md bg-gray-700 items-center text-lg font-medium justify-items-center my-2 h-12 text-gray-200 hover:cursor-pointer hover:text-gray-300 hover:bg-gray-600"> 
                             <h2>{team.rank}</h2>
