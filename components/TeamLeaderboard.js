@@ -1,10 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function TeamLeaderboard() {
 
     const data = [
         {
+            id: 333,
             rank: 1,
             talentScore: 1016.79,
             name: "Alabama",
@@ -12,6 +14,7 @@ export default function TeamLeaderboard() {
             conference: "SEC"
         },
         {
+            id: 61,
             rank: 2,
             talentScore: 989.76,
             name: "Georgia",
@@ -19,6 +22,7 @@ export default function TeamLeaderboard() {
             conference: "SEC"
         },
         {
+            id: 194,
             rank: 3,
             talentScore: 983.14,
             name: "Ohio State",
@@ -38,7 +42,8 @@ export default function TeamLeaderboard() {
                 </div>           
                 <ul>
                     {data.map((team) => (
-                        <div className="grid grid-cols-4 border ml-28 mr-28 rounded-md bg-gray-700 items-center text-lg font-medium justify-items-center my-2 h-12 text-gray-200" key={team}> 
+                        <Link href={'/teams/' + team.id.toString()} key={team}>
+                        <div className="grid grid-cols-4 border ml-28 mr-28 rounded-md bg-gray-700 items-center text-lg font-medium justify-items-center my-2 h-12 text-gray-200 hover:cursor-pointer hover:text-gray-300 hover:bg-gray-600"> 
                             <h2>{team.rank}</h2>
                             <div className="flex justify-self-start ml-20">
                                 <Image src={team.image} height={30} width={30}></Image>
@@ -46,7 +51,8 @@ export default function TeamLeaderboard() {
                             </div>                                                   
                             <h2>{team.talentScore}</h2>                    
                             <h2>{team.conference}</h2>                
-                        </div>        
+                        </div>    
+                        </Link>
                     ))}
                 </ul>
             </>
