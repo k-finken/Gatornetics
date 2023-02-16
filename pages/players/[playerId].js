@@ -276,7 +276,7 @@ const PlayerDetails = ({ playerData, teamData, playerTeam }) => {
         <Layout>
             <div>
                 <div className="flex flex-wrap justify-center mt-5">
-                    <Image src={playerData.imgLinx} height={254} width={350} priority/>
+                    <Image alt='player-image' src={playerData.imgLinx} height={254} width={350} priority/>
                     <div className="flex flex-col mx-20 justify-right">
                         <div className="mt-16 m-auto flex flex-col items-left text-white text-s">
                             <div className="flex items-end">
@@ -324,6 +324,18 @@ const PlayerDetails = ({ playerData, teamData, playerTeam }) => {
                         <Line options={options2} data={playerGraphData2} />
                     </div>
                 </div>
+                {
+                    playerPosStat1.length > 1 &&
+                        <div className='mx-96'>
+                            <Line options={options1} data={playerGraphData1} />
+                        </div>
+                }
+                {
+                    playerPosStat2.length > 1 &&
+                        <div className='mt-20 mx-96'>
+                            <Line options={options2} data={playerGraphData2} />
+                        </div>
+                }
             </div>
         </Layout>
     );
