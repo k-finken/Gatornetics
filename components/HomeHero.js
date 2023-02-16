@@ -3,6 +3,7 @@ import { Chart, ChartJS, CategoryScale, LinearScale, PointElement, LineElement, 
 import { Doughnut, Pie, Line } from 'react-chartjs-2';
 import Link from "next/link";
 import { prisma, PrismaClient } from '@prisma/client';
+import TeamLeaderboard from "./TeamLeaderboard";
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Legend, Tooltip, PieController);
 const fetcher = (...args) => fetch(...args).then(res => res.json())
@@ -125,7 +126,6 @@ function Index({foundPlayer}) {
             }
         ],
     };
-    
 
 
     return (
@@ -146,6 +146,12 @@ function Index({foundPlayer}) {
                     <Pie data={dataPie} options={options}></Pie>
                 </div>
             </div>
+
+            <div className="mt-20 flex justify-center items-center">
+                <h2 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white text-gray-200">Top Teams for 2023</h2>
+            </div>
+            <TeamLeaderboard />
+
             <div className="mt-20 flex justify-center items-center">
                 <h2 className="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl dark:text-white text-gray-200">How it works</h2>
             </div>
