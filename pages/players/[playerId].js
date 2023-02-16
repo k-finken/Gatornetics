@@ -316,18 +316,20 @@ const PlayerDetails = ({ playerData, teamData, playerTeam }) => {
                 <div>
                     <h1 className="mt-10 flex justify-center text-3xl font-bold"></h1>
                 </div>
-                {
-                    playerPosStat1.length > 1 &&
-                        <div className='mx-96'>
-                            <Line options={options1} data={playerGraphData1} />
-                        </div>
-                }
-                {
-                    playerPosStat2.length > 1 &&
-                        <div className='mt-20 mx-96'>
-                            <Line options={options2} data={playerGraphData2} />
-                        </div>
-                }
+                <div className="flex flex-wrap justify-center mb-20">
+                    {
+                        playerPosStat1.length > 1 &&
+                            <div className='mx-96 h-[120] w-3/4 bg-gray-700 px-6 py-2 rounded-lg'>
+                                <Line options={options1} data={playerGraphData1} />
+                            </div>
+                    }
+                    {
+                        playerPosStat2.length > 1 &&
+                            <div className='mt-20 mx-96 h-[120] w-3/4 bg-gray-700 px-6 py-2 rounded-lg'>
+                                <Line options={options2} data={playerGraphData2} />
+                            </div>
+                    }
+                </div>
             </div>
         </Layout>
     );
