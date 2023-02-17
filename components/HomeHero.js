@@ -165,14 +165,6 @@ function Index({foundPlayer}) {
                     <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-10 md:text-lg lg:text-xl dark:text-gray-400">Updated every week, data is always up to date and reliable.</p>
                 </div>
             </div>
-            <div className="mt-20 flex justify-center items-center">
-                <h2 className="mt-10 max-w-2xl mb-4 text-4xl font-bold tracking-tight leading-none md:text-4xl xl:text-5xl dark:text-white text-gray-200">About Us</h2>
-            </div>
-            <div className="flex justify-center items-center">
-                <p className="max-w-2xl mb-6 font-light text-gray-200 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
-                    Do we want to include something like this?
-                </p>
-            </div>
             <div className="shadow-lg rounded-lg overflow-hidden">
             </div>
         </section>
