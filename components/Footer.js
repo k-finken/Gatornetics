@@ -14,18 +14,8 @@ function Footer() {
       <div className="flex justify-center">
         <ul className="flex mb-2 text-sm text-gray-400">
           <li className="mx-2 hover:underline md:mx-3">
-            <Link href="/signUp">
-              Sign In
-            </Link>
-          </li>
-          <li className="mx-2 hover:underline md:mx-3">
             <Link href="/faq">
-              FAQs
-            </Link>
-          </li>
-          <li className="mx-2 hover:underline md:mx-3">
-            <Link href="/machine-learning">
-              ML Analysis
+              FAQ
             </Link>
           </li>
         </ul>
