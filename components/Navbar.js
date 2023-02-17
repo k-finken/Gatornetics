@@ -242,6 +242,9 @@ export default function NavBar({teams}) {
                                 <Link href="/teams/57">Teams</Link>
                             </li>
                             <li className="text-white hover:text-gray-500">
+                                <Link href="/compare">Compare</Link>
+                            </li>
+                            <li className="text-white hover:text-gray-500">
                                 <Link href="/faq">FAQ</Link>
                             </li>
                             <li className="text-white hover:text-gray-500">
