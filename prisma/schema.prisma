@@ -33,27 +33,106 @@ model players {
 }
 
 model teams {
-  id          Int     @id
-  school      String  @db.VarChar(255)
-  conference  String? @db.VarChar(50)
-  color       String  @db.VarChar(7)
-  division    String? @db.VarChar(10)
-  wins        Int?
-  expecWins   Float?  @db.Float
-  recRank     Int?
-  talentScore Float?  @db.Float
-  losses      Int?
-  overOff     Float?  @db.Float
-  overDeff    Float?  @db.Float
-  confWins    Int?
-  confLosses  Int?
-  homeW       Int?
-  homeL       Int?
-  awayW       Int?
-  awayL       Int?
-  playerIDS   Json?
-  abbr        String? @db.VarChar(5)
-  imgLinx     String? @db.Text
+  id                  Int      @id
+  school              String   @db.VarChar(255)
+  conference          String?  @db.VarChar(50)
+  color               String   @db.VarChar(7)
+  division            String?  @db.VarChar(10)
+  wins                Int?
+  expecWins           Float?   @db.Float
+  recRank             Int?
+  talentScore         Float?   @db.Float
+  losses              Int?
+  overOff             Float?   @db.Float
+  overDeff            Float?   @db.Float
+  confWins            Int?
+  confLosses          Int?
+  homeW               Int?
+  homeL               Int?
+  awayW               Int?
+  awayL               Int?
+  playerIDS           Json?
+  abbr                String?  @db.VarChar(5)
+  imgLinx             String?  @db.Text
+  offPlayCt           Int?
+  offDriveCt          Int?
+  offPPA              Decimal? @db.Decimal(3, 2)
+  offtotalPPA         Decimal? @db.Decimal(5, 2)
+  offsuccRate         Decimal? @db.Decimal(3, 2)
+  offexpl             Decimal? @db.Decimal(3, 2)
+  offpwrSucc          Decimal? @db.Decimal(3, 2)
+  offstuffRate        Decimal? @db.Decimal(3, 2)
+  offlineYds          Decimal? @db.Decimal(3, 2)
+  offlineYdsTOT       Int?
+  offSecLvlYds        Decimal? @db.Decimal(3, 2)
+  offSecLvlYdsTOT     Int?
+  offOpenFieldYds     Decimal? @db.Decimal(3, 2)
+  offOpenFieldYdsTOT  Int?
+  offTotOpp           Int?
+  offPPOpp            Decimal? @db.Decimal(3, 2)
+  offFPavgStart       Decimal? @db.Decimal(3, 1)
+  offFPavgPP          Decimal? @db.Decimal(3, 2)
+  offHavocTOT         Decimal? @db.Decimal(3, 2)
+  offHavocFS          Decimal? @db.Decimal(3, 2)
+  offHavocDB          Decimal? @db.Decimal(3, 2)
+  offsdDownRT         Decimal? @db.Decimal(3, 2)
+  offsdDownPPA        Decimal? @db.Decimal(3, 2)
+  offsdDownSuccRT     Decimal? @db.Decimal(3, 2)
+  offsdDownExplRT     Decimal? @db.Decimal(3, 2)
+  offpassDownRT       Decimal? @db.Decimal(3, 2)
+  offpassDownPPA      Decimal? @db.Decimal(3, 2)
+  offpassDownSuccRT   Decimal? @db.Decimal(3, 2)
+  offpassDownExpl     Decimal? @db.Decimal(3, 2)
+  offrushPlayRT       Decimal? @db.Decimal(3, 2)
+  offrushPlayPPA      Decimal? @db.Decimal(3, 2)
+  offrushPlayTOTPPA   Decimal? @db.Decimal(5, 2)
+  offrushPlaySuccRT   Decimal? @db.Decimal(3, 2)
+  offrushPlayExpl     Decimal? @db.Decimal(3, 2)
+  offpassPlayRT       Decimal? @db.Decimal(3, 2)
+  offpassPlayPPA      Decimal? @db.Decimal(3, 2)
+  offpassPlayTOTPPA   Decimal? @db.Decimal(5, 2)
+  offpassPlaySuccRate Decimal? @db.Decimal(3, 2)
+  offpassPlayExpl     Decimal? @db.Decimal(3, 2)
+  defensePlayCT       Int?
+  defenseDriveCT      Int?
+  defPPA              Decimal? @db.Decimal(3, 2)
+  defTOTPPA           Decimal? @db.Decimal(5, 2)
+  defSuccRT           Decimal? @db.Decimal(3, 2)
+  defExpl             Decimal? @db.Decimal(3, 2)
+  defPwrSucc          Decimal? @db.Decimal(3, 2)
+  defStuffRT          Decimal? @db.Decimal(3, 2)
+  defLineYDS          Decimal? @db.Decimal(3, 2)
+  defLineYDSTOT       Int?
+  defsecondLvlYDS     Decimal? @db.Decimal(3, 2)
+  defsecondLvlYDSTOT  Int?
+  defopenFldYDS       Decimal? @db.Decimal(3, 2)
+  defopenFldYDSTOT    Int?
+  defTotOpp           Int?
+  defPPOpp            Decimal? @db.Decimal(3, 2)
+  defFPAVGstart       Decimal? @db.Decimal(3, 1)
+  defHavocTot         Decimal? @db.Decimal(3, 2)
+  defHavocFS          Decimal? @db.Decimal(3, 2)
+  defHavocDB          Decimal? @db.Decimal(3, 2)
+  defSDRate           Decimal? @db.Decimal(3, 2)
+  defSDPPA            Decimal? @db.Decimal(3, 2)
+  defSDsuccRT         Decimal? @db.Decimal(3, 2)
+  defSDExpl           Decimal? @db.Decimal(3, 2)
+  defPassDownRT       Decimal? @db.Decimal(3, 2)
+  defPassDownPPA      Decimal? @db.Decimal(3, 2)
+  defPassDownPPATOT   Decimal? @db.Decimal(5, 2)
+  defPassDownSuccRT   Decimal? @db.Decimal(5, 2)
+  defPassDownExpl     Decimal? @db.Decimal(3, 2)
+  defRushPlayRT       Decimal? @db.Decimal(3, 2)
+  defRushPlayPPA      Decimal? @db.Decimal(3, 2)
+  defRushPlayPPATOT   Decimal? @db.Decimal(5, 2)
+  defRushPlaySuccRT   Decimal? @db.Decimal(5, 2)
+  defRushPlayExpl     Decimal? @db.Decimal(3, 2)
+  defPassPlayRT       Decimal? @db.Decimal(3, 2)
+  defPassPlayPPA      Decimal? @db.Decimal(3, 2)
+  defPassPlaySuccRT   Decimal? @db.Decimal(3, 2)
+  defPassPlayExpl     Decimal? @db.Decimal(3, 2)
+  playerDemographic   Json?
+  recruitPosition     Json?
 
   @@fulltext([school])
 }
