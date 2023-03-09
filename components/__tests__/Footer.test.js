@@ -4,10 +4,10 @@ import '@testing-library/jest-dom'
 
 afterEach(cleanup);
 
-test("footer renders", () => {
+test("Footer renders", () => {
     render(<Footer />)
 
-    const footer = screen.getByTestId('footer-1')
+    const footer = screen.getByTestId('Footer-1')
 
     expect(footer).toBeInTheDocument()
 });
@@ -15,7 +15,7 @@ test("footer renders", () => {
 test("footer contains all text", () => {
     render(<Footer />)
 
-    const footer = screen.getByTestId('footer-1')
+    const footer = screen.getByTestId('Footer-1')
 
     expect(footer).toHaveTextContent("Gatornetics")
     expect(footer).toHaveTextContent("FAQ")

@@ -32,7 +32,7 @@ export default function TeamLeaderboard() {
     ]
 
     return (
-        <div>
+        <div data-testid="TeamLeaderboard-1">
             <>            
                 <div className="grid grid-cols-4 ml-28 mr-28 rounded-md text-3xl mt-10 font-bold text-gray-200 justify-items-center">  
                     <h1>Rank</h1>                

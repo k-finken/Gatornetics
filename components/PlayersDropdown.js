@@ -21,7 +21,7 @@ export default function PlayersDropdown({ teamArray, title }) {
     };
 
     return (
-        <Combobox as='div' className='flex justify-center text-white text-lg'>
+        <Combobox as='div' className='flex justify-center text-white text-lg' data-testid="PlayersDropdown-1">
             <div className='flex focus:outline-none rounded-lg bg-gray-700'>
                 <Combobox.Input placeholder={title} className='outline-none ml-2 rounded-lg bg-gray-700' onFocus={resetInputField} onChange={handleChange} />
                 <Combobox.Button className="flex items-center px-4 py-2 rounded-md">
