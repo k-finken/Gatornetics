@@ -21,3 +21,11 @@ test("footer contains all text", () => {
     expect(footer).toHaveTextContent("FAQ")
     expect(footer).toHaveTextContent("© 2022 Gatornetics. All Rights Reserved")
 })
+
+test("Gatornetics redirects", () => {
+    render(<Footer />)
+
+    const gatornetics = screen.getByTestId("Footer-gatornetics")
+
+    expect(gatornetics).toHaveAttribute('Link', '/')
+})

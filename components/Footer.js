@@ -4,9 +4,9 @@ import Link from "next/link";
 function Footer() {
   return (
     <footer className="p-4 shadow mt-20" data-testid="Footer-1">
-      <div className="flex mb-4 justify-center" data-testid='gatornetics-1'>
+      <div className="flex mb-4 justify-center">
         <Link href="/">
-          <h2 className="text-2xl font-bold text-white hover:text-blue-600 cursor-pointer">
+          <h2 className="text-2xl font-bold text-white hover:text-blue-600 cursor-pointer" data-testid="Footer-gatornetics">
             Gatornetics
           </h2>
         </Link>
