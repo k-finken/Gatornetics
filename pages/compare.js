@@ -50,6 +50,16 @@ export async function getServerSideProps(context) {
         select: {
             id:true,
             school:true,
+            conference:true,
+            color:true,
+            wins:true,
+            losses:true,
+            expecWins:true,
+            recRank:true,
+            talentScore:true,
+            overOff:true,
+            overDeff:true,
+            imgLinx:true,
         },
     })
     teamsList.sort((a, b) => (a.school > b.school ? 1 : -1));
@@ -68,6 +78,7 @@ export default function Compare( { teamsList } ) {
     const [teamSel2, setTeamSel2] = useState(null)
     const [playersList1, setPlayersList1] = useState(null)
     const [playersList2, setPlayersList2] = useState(null)
+    const [teamCompare, setTeamCompare] = useState(0)
 
     async function playersAtPosTeam(query) {
         const apiRoute = '/api/playersAtPosTeam?queryPosTeam=' + query;
@@ -102,11 +113,23 @@ export default function Compare( { teamsList } ) {
         setTeamSel2(null);
         setPlayersList1(null);
         setPlayersList2(null);
+        setTeamCompare(0);
     };
+
+    const handleTeamCompare = () => {
+        setPosChosen(null);
+        setPlayerSel1(null);
+        setPlayerSel2(null);
+        setTeamSel1(teamsList.find((team) => team.id == 57)); // Florida
+        setTeamSel2(teamsList.find((team) => team.id == 61)); // Georgia
+        setPlayersList1(null);
+        setPlayersList2(null);
+        setTeamCompare(1);
+    }
 
     useEffect(() => {
         (async () => {
-            if (teamSel1) {
+            if (teamSel1 && posChosen) {
 
                 const posTeam1 = posChosen.abbr + " " + teamSel1.id.toString();
                 const playerArray1 = await playersAtPosTeam(posTeam1);
@@ -121,7 +144,7 @@ export default function Compare( { teamsList } ) {
 
     useEffect(() => {
         (async () => {
-            if (teamSel2) {
+            if (teamSel2 && posChosen) {
 
                 const posTeam2 = posChosen.abbr + " " + teamSel2.id.toString();
                 const playerArray2 = await playersAtPosTeam(posTeam2);
@@ -316,9 +339,9 @@ export default function Compare( { teamsList } ) {
   return (
     <Layout>
         <div className=''>
-            <div className='flex justify-center'>
+            <div className='flex flex-col justify-center'>
                 <Menu as='div' className='flex h-10 justify-center text-white text-lg'>
-                    <Menu.Button className="flex rounded-lg bg-gray-700 px-4 py-2 text-sm text-white hover:bg-gray-600">
+                    <Menu.Button className="flex w-[150px] rounded-lg bg-gray-700 px-4 py-2 text-sm text-white hover:bg-gray-600">
                         Select Position
                         <ChevronUpDownIcon className="ml-2 h-5 w-5" aria-hidden="true"/>
                     </Menu.Button>
@@ -331,112 +354,184 @@ export default function Compare( { teamsList } ) {
                             ))}
                     </Menu.Items>
                 </Menu>
+
+                <Menu as='div' className='flex mt-2 h-10 justify-center text-white text-lg'>
+                    <Menu.Button onClick={() => handleTeamCompare(1)} className="flex items-center justify-center w-[150px] rounded-lg bg-gray-700 px-4 py-2 text-sm text-white hover:bg-gray-600">
+                        Compare Teams
+                    </Menu.Button>
+                </Menu>
             </div>
 
             
-            { posChosen == null ? (
+            { ((posChosen == null) && (teamCompare == 0)) ? ( // nothing selected
                 <div className='flex h-screen justify-center'>
-                    <div className='text-4xl mt-4 font-bold text-white'>NO POSITION SELECTED</div>
+                    <div className='text-4xl mt-4 font-bold text-white'>Make a selection</div>
                     <div className='h-52'></div>
                 </div>
                 
             ) : (
-                <div className='flex flex-col'>
-                    <div className='flex self-center text-4xl mt-4 font-bold text-white'>{posChosen.pos}</div>
-                    <button onClick={generatePlayers} className="flex justify-center self-center w-40 bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white py-2 px-4 mt-4 rounded">
-                        Generate players
-                    </button>
+                <div>
+                    { posChosen ? (
+                        <div className='flex flex-col'>
+                            <div className='flex self-center text-4xl mt-4 font-bold text-white'>{posChosen.pos}</div>
+                            <button onClick={generatePlayers} className="flex justify-center self-center w-40 bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white py-2 px-4 mt-4 rounded">
+                                Generate players
+                            </button>
 
-                    { playersList1 == null || playersList2 == null ? (
-                        <div className='h-screen'></div>
-                    ) : 
-                    (<div>
-                        <div className='flex flex-row justify-around py-4'>
-                            <div className='flex flex-col justify-center'>
+                            { playersList1 == null || playersList2 == null ? (
+                                <div className='h-screen'></div>
+                            ) : 
+                            (<div>
+                                <div className='flex flex-row justify-around py-4'>
+                                    <div className='flex flex-col justify-center'>
+                                        
+                                        <Image className='object-scale-down' alt='player-image' src={playerSel1.imgLinx} height={254} width={350} priority/>
+                                        <div className='self-center pt-2 text-4xl font-bold text-white'>{playerSel1.firstName} {playerSel1.lastName}</div>
+                                        <div className='self-center pt-2 text-4xl font-bold text-white'>{teamSel1.school}</div>
+                                        <div className='flex'>
+                                            <Menu as='div' className='flex justify-center pt-4 mr-2 text-white text-lg'>
+                                                <Menu.Button className='flex items-center justify-between w-56 px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 active:bg-gray-500'>
+                                                        <div className='mr-2'>Select first team</div>
+                                                        <ChevronUpDownIcon className="h-5 w-5 text-white" aria-hidden="true"/>
+                                                </Menu.Button>
+                                                <Menu.Items as='ul' className='absolute z-40 mt-12 h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
+                                                    {teamsList.map((team) => (
+                                                        <Menu.Item as='li' key={team.id} value={team} >
+                                                            <div onClick={() => handleTeam1Choice(team)} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{team.school}</div>
+                                                        </Menu.Item>
+                                                    ))}
+                                                </Menu.Items>
+                                            </Menu>
+                                            <Menu as='div' className='flex justify-center pt-4 text-white text-lg'>
+                                                <Menu.Button className='flex items-center justify-between w-56 px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 active:bg-gray-500'>
+                                                        <div className='mr-2'>Select first player</div>
+                                                        <ChevronUpDownIcon className="h-5 w-5 text-white" aria-hidden="true"/>
+                                                </Menu.Button>
+                                                <Menu.Items as='ul' className='absolute z-40 mt-12 h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
+                                                    {playersList1.map((player) => (
+                                                        <Menu.Item as='li' key={player.id} value={player} >
+                                                            <div onClick={() => setPlayerSel1(player)} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{player.firstName} {player.lastName}</div>
+                                                        </Menu.Item>
+                                                    ))}
+                                                </Menu.Items>
+                                            </Menu>
+                                        </div>
+                                    </div>
+                                    <div className='flex'>
+                                        <div className='self-end pb-8 text-5xl font-bold text-white'>VS</div>
+                                    </div>
+                                    <div className='flex flex-col'>
+                                        <Image className='object-scale-down' alt='player-image' src={playerSel2.imgLinx} height={254} width={350} priority/>
+                                        <div className='self-center pt-2 text-4xl font-bold text-white'>{playerSel2.firstName} {playerSel2.lastName}</div>
+                                        <div className='self-center pt-2 text-4xl font-bold text-white'>{teamSel2.school}</div>
+                                        <div className='flex'>
+                                            <Menu as='div' className='flex justify-center pt-4 mr-2 text-white text-lg'>
+                                                <Menu.Button className='flex items-center justify-between w-56 px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 active:bg-gray-500'>
+                                                        <div className='mr-2'>Select first team</div>
+                                                        <ChevronUpDownIcon className="h-5 w-5 text-white" aria-hidden="true"/>
+                                                </Menu.Button>
+                                                <Menu.Items as='ul' className='absolute z-40 mt-12 h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
+                                                    {teamsList.map((team) => (
+                                                        <Menu.Item as='li' key={team.id} value={team} >
+                                                            <div onClick={() => handleTeam2Choice(team)} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{team.school}</div>
+                                                        </Menu.Item>
+                                                    ))}
+                                                </Menu.Items>
+                                            </Menu>
+                                            <Menu as='div' className='flex justify-center pt-4 text-white text-lg'>
+                                                <Menu.Button className='flex items-center justify-between w-56 px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 active:bg-gray-500'>
+                                                        <div className='mr-2'>Select second player</div>
+                                                        <ChevronUpDownIcon className="h-5 w-5 text-white" aria-hidden="true"/>
+                                                </Menu.Button>
+                                                <Menu.Items as='ul' className='absolute z-40 mt-12 h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
+                                                    {playersList2.map((player) => (
+                                                        <Menu.Item as='li' key={player.id} value={player} >
+                                                            <div onClick={() => setPlayerSel2(player)} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{player.firstName} {player.lastName}</div>
+                                                        </Menu.Item>
+                                                    ))}
+                                                </Menu.Items>
+                                            </Menu>
+
+                                        </div>
+                                    </div>
+                                </div>
                                 
-                                <Image className='object-scale-down' alt='player-image' src={playerSel1.imgLinx} height={254} width={350} priority/>
-                                <div className='self-center pt-2 text-4xl font-bold text-white'>{playerSel1.firstName} {playerSel1.lastName}</div>
-                                <div className='self-center pt-2 text-4xl font-bold text-white'>{teamSel1.school}</div>
-                                <div className='flex'>
-                                    <Menu as='div' className='flex justify-center pt-4 mr-2 text-white text-lg'>
-                                        <Menu.Button className='flex items-center justify-between w-56 px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 active:bg-gray-500'>
-                                                <div className='mr-2'>Select first team</div>
-                                                <ChevronUpDownIcon className="h-5 w-5 text-white" aria-hidden="true"/>
-                                        </Menu.Button>
-                                        <Menu.Items as='ul' className='absolute z-40 mt-12 h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
-                                            {teamsList.map((team) => (
-                                                <Menu.Item as='li' key={team.id} value={team} >
-                                                    <div onClick={() => handleTeam1Choice(team)} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{team.school}</div>
-                                                </Menu.Item>
-                                            ))}
-                                        </Menu.Items>
-                                    </Menu>
-                                    <Menu as='div' className='flex justify-center pt-4 text-white text-lg'>
-                                        <Menu.Button className='flex items-center justify-between w-56 px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 active:bg-gray-500'>
-                                                <div className='mr-2'>Select first player</div>
-                                                <ChevronUpDownIcon className="h-5 w-5 text-white" aria-hidden="true"/>
-                                        </Menu.Button>
-                                        <Menu.Items as='ul' className='absolute z-40 mt-12 h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
-                                            {playersList1.map((player) => (
-                                                <Menu.Item as='li' key={player.id} value={player} >
-                                                    <div onClick={() => setPlayerSel1(player)} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{player.firstName} {player.lastName}</div>
-                                                </Menu.Item>
-                                            ))}
-                                        </Menu.Items>
-                                    </Menu>
-                                </div>
-                            </div>
-                            <div className='flex'>
-                                <div className='self-end pb-8 text-5xl font-bold text-white'>VS</div>
-                            </div>
-                            <div className='flex flex-col'>
-                                <Image className='object-scale-down' alt='player-image' src={playerSel2.imgLinx} height={254} width={350} priority/>
-                                <div className='self-center pt-2 text-4xl font-bold text-white'>{playerSel2.firstName} {playerSel2.lastName}</div>
-                                <div className='self-center pt-2 text-4xl font-bold text-white'>{teamSel2.school}</div>
-                                <div className='flex'>
-                                    <Menu as='div' className='flex justify-center pt-4 mr-2 text-white text-lg'>
-                                        <Menu.Button className='flex items-center justify-between w-56 px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 active:bg-gray-500'>
-                                                <div className='mr-2'>Select first team</div>
-                                                <ChevronUpDownIcon className="h-5 w-5 text-white" aria-hidden="true"/>
-                                        </Menu.Button>
-                                        <Menu.Items as='ul' className='absolute z-40 mt-12 h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
-                                            {teamsList.map((team) => (
-                                                <Menu.Item as='li' key={team.id} value={team} >
-                                                    <div onClick={() => handleTeam2Choice(team)} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{team.school}</div>
-                                                </Menu.Item>
-                                            ))}
-                                        </Menu.Items>
-                                    </Menu>
-                                    <Menu as='div' className='flex justify-center pt-4 text-white text-lg'>
-                                        <Menu.Button className='flex items-center justify-between w-56 px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 active:bg-gray-500'>
-                                                <div className='mr-2'>Select second player</div>
-                                                <ChevronUpDownIcon className="h-5 w-5 text-white" aria-hidden="true"/>
-                                        </Menu.Button>
-                                        <Menu.Items as='ul' className='absolute z-40 mt-12 h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
-                                            {playersList2.map((player) => (
-                                                <Menu.Item as='li' key={player.id} value={player} >
-                                                    <div onClick={() => setPlayerSel2(player)} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{player.firstName} {player.lastName}</div>
-                                                </Menu.Item>
-                                            ))}
-                                        </Menu.Items>
-                                    </Menu>
+                                <div className='flex flex-col mt-4 justify-center'>
+                                    <div className="flex justify-center">
+                                        <div className='bg-gray-700 rounded-lg w-3/4 p-2'><Line options={options1} data={graphData1} /></div>
+                                    </div>
 
+                                    <div className="flex justify-center mt-4">
+                                        <div className='bg-gray-700 rounded-lg w-3/4 p-2'><Line options={options2} data={graphData2} /></div>
+                                    </div>
                                 </div>
+                            </div>)
+                            }
+
+                        </div>
+                    ) : (
+                        <div className='flex mt-4 justify-around text-white font-light  text-2xl'>
+                            <div className='flex flex-col items-center'>
+                                <Menu as='div' className='flex h-10 justify-center text-white text-lg'>
+                                    <Menu.Button className="flex rounded-lg bg-gray-700 px-4 py-2 text-sm text-white font-normal hover:bg-gray-600">
+                                        Select Team 1
+                                        <ChevronUpDownIcon className="ml-2 h-5 w-5" aria-hidden="true"/>
+                                    </Menu.Button>
+                                    
+                                    <Menu.Items as='ul' className='absolute z-10 mt-12 max-h-48 w-60 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
+                                            {teamsList.map((team) => (
+                                                <Menu.Item  key={team.id} value={team}>
+                                                    <div onClick={() => setTeamSel1(team)} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{team.school}</div>
+                                                </Menu.Item>
+                                            ))}
+                                    </Menu.Items>
+                                </Menu>
+                                <Image src={teamSel1.imgLinx} width="200" height="200" priority />
+                                <div className='font-bold'>{teamSel1.school}</div>
+                                <div>{teamSel1.conference}</div>
+                                <div className='font-semibold'>{teamSel1.wins} - {teamSel1.losses}</div>
+                                <div>{teamSel1.expecWins}</div>
+                                <div className='font-semibold'>{teamSel1.recRank}</div>
+                                <div>{teamSel1.overOff}</div>
+                                <div className='font-semibold'>{teamSel1.overDeff}</div>
+
+                            </div>
+                            <div className='flex flex-col items-center'>
+                                <div className='pt-[240px]'></div>
+                                <div className='font-bold'>School</div>
+                                <div>Conference</div>
+                                <div className='font-semibold'>Record</div>
+                                <div>Expected Wins</div>
+                                <div className='font-semibold'>Recruiting Rank</div>
+                                <div>Overall Offensive Score</div>
+                                <div className='font-semibold'>Overall Defensive Score</div>
+                            </div>
+                            <div className='flex flex-col items-center'>
+                                <Menu as='div' className='flex h-10 justify-center text-white text-lg'>
+                                    <Menu.Button className="flex rounded-lg bg-gray-700 px-4 py-2 text-sm text-white font-normal hover:bg-gray-600">
+                                        Select Team 2
+                                        <ChevronUpDownIcon className="ml-2 h-5 w-5" aria-hidden="true"/>
+                                    </Menu.Button>
+                                    
+                                    <Menu.Items as='ul' className='absolute z-10 mt-12 max-h-48 w-60 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
+                                            {teamsList.map((team) => (
+                                                <Menu.Item  key={team.id} value={team}>
+                                                    <div onClick={() => setTeamSel2(team)} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{team.school}</div>
+                                                </Menu.Item>
+                                            ))}
+                                    </Menu.Items>
+                                </Menu>
+                                <Image src={teamSel2.imgLinx} width="200" height="200" priority />
+                                <div className='font-bold'>{teamSel2.school}</div>
+                                <div>{teamSel2.conference}</div>
+                                <div className='font-semibold'>{teamSel2.wins} - {teamSel1.losses}</div>
+                                <div>{teamSel2.expecWins}</div>
+                                <div className='font-semibold'>{teamSel2.recRank}</div>
+                                <div>{teamSel2.overOff}</div>
+                                <div className='font-semibold'>{teamSel2.overDeff}</div>
                             </div>
                         </div>
-                        
-                        <div className='flex flex-col mt-4 justify-center'>
-                            <div className="flex justify-center">
-                                <div className='bg-gray-700 rounded-lg w-3/4 p-2'><Line options={options1} data={graphData1} /></div>
-                            </div>
-
-                            <div className="flex justify-center mt-4">
-                                <div className='bg-gray-700 rounded-lg w-3/4 p-2'><Line options={options2} data={graphData2} /></div>
-                            </div>
-                        </div>
-                    </div>)
-                    }
-
+                    )}
                 </div>
             )}
         </div>
