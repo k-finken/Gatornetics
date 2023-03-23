@@ -20,12 +20,20 @@ test("footer contains all text", () => {
     expect(footer).toHaveTextContent("Gatornetics")
     expect(footer).toHaveTextContent("FAQ")
     expect(footer).toHaveTextContent("© 2022 Gatornetics. All Rights Reserved")
-})
+});
 
-test("Gatornetics redirects", () => {
+test("footer FAQ redirects", () => {
     render(<Footer />)
 
-    const gatornetics = screen.getByTestId("Footer-gatornetics")
+    const faq = screen.getByText("FAQ")
 
-    expect(gatornetics).toHaveAttribute('Link', '/')
+    expect(faq).toContainHTML("href=\"/faq\"")
+});
+
+test("footer Gatornetics correct format", () => {
+    render(<Footer />)
+
+    const gatornetics = screen.queryAllByText("Gatornetics").at(0);
+
+    expect(gatornetics).toContainHTML("text-2xl font-bold text-white hover:text-blue-600 cursor-pointer")
 })
