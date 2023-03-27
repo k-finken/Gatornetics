@@ -32,7 +32,7 @@ export default function TeamLeaderboard() {
     ]
 
     return (
-        <div>
+        <div data-testid="TeamLeaderboard-1">
             <>            
                 <div className="grid grid-cols-4 ml-28 mr-28 rounded-md text-3xl mt-10 font-bold text-gray-200 justify-items-center">  
                     <h1>Rank</h1>                
@@ -43,7 +43,7 @@ export default function TeamLeaderboard() {
                 <ul>
                     {data.map((team) => (
                         <Link href={'/teams/' + team.id.toString()} key={team.id}>
-                        <div className="grid grid-cols-4 border ml-28 mr-28 rounded-md bg-gray-700 items-center text-lg font-medium justify-items-center my-2 h-12 text-gray-200 hover:cursor-pointer hover:text-gray-300 hover:bg-gray-600"> 
+                        <div className="grid grid-cols-4 border ml-28 mr-28 rounded-md bg-gray-700 items-center text-lg font-medium justify-items-center my-2 h-12 text-gray-200 hover:cursor-pointer hover:text-gray-300 hover:bg-gray-600" data-testid="TeamLeaderboard-row"> 
                             <h2>{team.rank}</h2>
                             <div className="flex justify-self-start ml-20">
                                 <Image src={team.image} height={30} width={30}></Image>
