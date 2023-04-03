@@ -43,13 +43,13 @@ function Index({foundPlayer}) {
       };
 
     const dataPie = {
-        labels: ["Michigan", "Georgia"],
+        labels: ["Georgia", "TCU"],
         datasets: [
             {
-                data: [47, 53],
+                data: [100, 0],
                 backgroundColor: [
-                    "white",
-                    "#4b5563",
+                    "#CC0000",
+                    "#3C377D",
                 ],
                 hoverOffset: 2,
             },
