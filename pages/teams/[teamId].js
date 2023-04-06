@@ -26,6 +26,7 @@ ChartJS.register(
     Tooltip,
 );
 import Image from 'next/image';
+import InfoTooltip from '../../components/InfoTooltip';
 
 //this function generates all the paths that the dynamic query can take
 // export async function getStaticPaths() {
@@ -150,6 +151,9 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
         ],
     };
 
+    // Tooltips text
+    const expectedWinsInfo = "Expected wins are based on postgame win probabilities in which a team's previous game probabilities are summed together (and then formatted in terms of an overall score for how many wins a team will have in a given season).";
+
     return (
         <Layout>
             <div>
@@ -172,6 +176,7 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
                             <div className="flex items-end">
                                 <h3 className="text-xl">Expected Wins: </h3>
                                 <h3 className="text-2xl ml-3"><b>{teamData.expecWins}</b></h3>
+                                <div className='self-center'><InfoTooltip info={expectedWinsInfo}/></div>
                             </div>
                             <div className="flex items-end">
                                 <h3 className="text-xl">Recruiting Rank: </h3>
