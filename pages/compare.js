@@ -1,7 +1,7 @@
 import Layout from '../components/Layout'
 import { React, useState, useEffect } from 'react';
 import { prisma, PrismaClient } from '@prisma/client';
-import { Listbox, Combobox, Menu } from '@headlessui/react'
+import { Combobox, Menu } from '@headlessui/react'
 import { ChevronUpDownIcon } from '@heroicons/react/20/solid'
 import {
     Chart as ChartJS,
@@ -15,6 +15,9 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import Image from 'next/image';
+import Link from 'next/link';
+
+// import PlayersDropdown from '../components/PlayersDropdown';
 
 ChartJS.register(
     CategoryScale,
@@ -71,14 +74,51 @@ export async function getServerSideProps(context) {
 
 export default function Compare( { teamsList } ) {
     
-    const [posChosen, setPosChosen] = useState(null)
-    const [playerSel1, setPlayerSel1] = useState(null) //player1)
-    const [playerSel2, setPlayerSel2] = useState(null) //player2)
+    const [posChosen, setPosChosen] = useState({ pos: 'Running Back', abbr: "RB" })
+    const [playerSel1, setPlayerSel1] = useState(null)
+    const [playerSel2, setPlayerSel2] = useState(null)
     const [teamSel1, setTeamSel1] = useState(null)
     const [teamSel2, setTeamSel2] = useState(null)
     const [playersList1, setPlayersList1] = useState(null)
     const [playersList2, setPlayersList2] = useState(null)
     const [teamCompare, setTeamCompare] = useState(0)
+    const [playerCompare, setPlayerCompare] = useState(1)
+
+    // Combobox functions
+    const [comboInput1, setComboInput1] = useState("");
+    const [comboInput2, setComboInput2] = useState("");
+    const [queryItems1, setQueryItems1] = useState([]);
+    const [queryItems2, setQueryItems2] = useState([]);
+
+    const handleSearch1 = (e) => {
+        e.preventDefault();
+        setComboInput1(e.target.value);
+        updateTypeAhead1(e.target.value);
+    }
+    const handleSearch2 = (e) => {
+        e.preventDefault();
+        setComboInput2(e.target.value);
+        updateTypeAhead2(e.target.value);
+    }
+
+    async function updateTypeAhead1 (query) {
+        const searchResultArray = await searchPlayersAtPos(posChosen.abbr + " " + query);
+        setQueryItems1(searchResultArray);
+    }
+    async function updateTypeAhead2 (query) {
+        const searchResultArray = await searchPlayersAtPos(posChosen.abbr + " " + query);
+        setQueryItems2(searchResultArray);
+    }
+
+    async function searchPlayersAtPos(query) {
+        const apiRoute = '/api/searchPlayersAtPos?queryString=' + query;
+        let returnData;
+        await fetch(apiRoute, {
+            method: 'GET',
+        }).then((response) => response.json()).then((data) => returnData = data);
+        return returnData;
+    }
+    // END of Combobox functions
 
     async function playersAtPosTeam(query) {
         const apiRoute = '/api/playersAtPosTeam?queryPosTeam=' + query;
@@ -91,71 +131,50 @@ export default function Compare( { teamsList } ) {
     }
 
     async function generatePlayers() {
-        const posTeam1 = posChosen.abbr + " " + "57"; // 57 == Florida's team_id
-        const posTeam2 = posChosen.abbr + " " + "52"; // 52 == Florida State's team_id
+        // SEC teams with good initial stats: 52, 2, 2579, 142, 344, 61, 99, 333, 245
+        const posTeam1 = posChosen.abbr + " " + "99"; // LSU
+        const posTeam2 = posChosen.abbr + " " + "142"; // 
         const playerArray1 = await playersAtPosTeam(posTeam1);
         const playerArray2 = await playersAtPosTeam(posTeam2);
 
-        setPlayersList1(playerArray1);
-        setPlayersList2(playerArray2);
+        setPlayersList1(queryItems1);
+        setPlayersList2(queryItems2);
         setPlayerSel1(playerArray1[0]);
         setPlayerSel2(playerArray2[0]);
-        setTeamSel1(teamsList.find((team) => team.id == playerArray1[0].team_id));
-        setTeamSel2(teamsList.find((team) => team.id == playerArray2[0].team_id));
+        setTeamSel1(null);
+        setTeamSel2(null);
     }
 
     const handlePosChoice = (e) => {
         const pos = pPositions.find((position) => position.pos == e.target.innerText)
         setPosChosen(pos);
-        setPlayerSel1(null);
-        setPlayerSel2(null);
-        setTeamSel1(null);
-        setTeamSel2(null);
-        setPlayersList1(null);
-        setPlayersList2(null);
         setTeamCompare(0);
     };
+    // executes when posChosen changes values
+    useEffect(() => {
+        (async () => {
+            generatePlayers();
+        })();
+    }, [posChosen]);
+
+    const handlePlayerCompare = () => {        
+        setPosChosen(posChosen);
+        setPlayerCompare(1);
+        setTeamCompare(0);
+        generatePlayers();
+    }
 
     const handleTeamCompare = () => {
-        setPosChosen(null);
-        setPlayerSel1(null);
-        setPlayerSel2(null);
         setTeamSel1(teamsList.find((team) => team.id == 57)); // Florida
         setTeamSel2(teamsList.find((team) => team.id == 61)); // Georgia
-        setPlayersList1(null);
-        setPlayersList2(null);
+        setPlayerCompare(0);
         setTeamCompare(1);
     }
 
     useEffect(() => {
-        (async () => {
-            if (teamSel1 && posChosen) {
-
-                const posTeam1 = posChosen.abbr + " " + teamSel1.id.toString();
-                const playerArray1 = await playersAtPosTeam(posTeam1);
-                setPlayersList1(playerArray1);
-                setPlayerSel1(playerArray1[0]);
-            }
-        })();
-    }, [teamSel1]);
-    const handleTeam1Choice = (team) => {
-        setTeamSel1(team);
-    };
-
-    useEffect(() => {
-        (async () => {
-            if (teamSel2 && posChosen) {
-
-                const posTeam2 = posChosen.abbr + " " + teamSel2.id.toString();
-                const playerArray2 = await playersAtPosTeam(posTeam2);
-                setPlayersList2(playerArray2);
-                setPlayerSel2(playerArray2[0]);
-            }
-        })();
-    }, [teamSel2]);
-    const handleTeam2Choice = (team) => {
-        setTeamSel2(team);
-    };
+        // loads the initial players to compare when the page laods
+        handlePlayerCompare();
+    }, []);
 
     const labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8', 'Week 9', 'Week 10', 'Week 11', 'Week 12'];
 
@@ -224,11 +243,23 @@ export default function Compare( { teamsList } ) {
     let player1PosStat2;
     let player1GraphStat2;
     let graphData1;
-    if (playerSel1 != null) {
+    // player2
+    let player2PosStat1;
+    let player2GraphStat1;
+    let player2PosStat2;
+    let player2GraphStat2;
+    let graphData2;
+    if ((playerSel1 != null) && (playerSel2 != null)) {
+        // player 1
         player1PosStat1 = playerSel1.posStat1[0].replace('[', '').replace(']', '').split(', ');
         player1GraphStat1 = player1PosStat1.map(Number);
         player1PosStat2 = playerSel1.posStat2[0].replace('[', '').replace(']', '').split(', ');
         player1GraphStat2 = player1PosStat2.map(Number);
+        // player 2
+        player2PosStat1 = playerSel2.posStat1[0].replace('[', '').replace(']', '').split(', ');
+        player2GraphStat1 = player2PosStat1.map(Number);
+        player2PosStat2 = playerSel2.posStat2[0].replace('[', '').replace(']', '').split(', ');
+        player2GraphStat2 = player2PosStat2.map(Number);
 
         graphData1 = {
             labels,
@@ -247,19 +278,6 @@ export default function Compare( { teamsList } ) {
                 },
             ],
         };
-    }
-    
-    // player2
-    let player2PosStat1;
-    let player2GraphStat1;
-    let player2PosStat2;
-    let player2GraphStat2;
-    let graphData2;
-    if (playerSel2 != null) {
-        player2PosStat1 = playerSel2.posStat1[0].replace('[', '').replace(']', '').split(', ');
-        player2GraphStat1 = player2PosStat1.map(Number);
-        player2PosStat2 = playerSel2.posStat2[0].replace('[', '').replace(']', '').split(', ');
-        player2GraphStat2 = player2PosStat2.map(Number);
 
         graphData2 = {
             labels,
@@ -339,20 +357,11 @@ export default function Compare( { teamsList } ) {
   return (
     <Layout>
         <div className=''>
-            <div className='flex flex-col justify-center'>
-                <Menu as='div' className='flex h-10 justify-center text-white text-lg'>
-                    <Menu.Button className="flex w-[150px] rounded-lg bg-gray-700 px-4 py-2 text-sm text-white hover:bg-gray-600">
-                        Select Position
-                        <ChevronUpDownIcon className="ml-2 h-5 w-5" aria-hidden="true"/>
+            <div className='flex justify-center'>
+                <Menu as='div' className='flex mr-2 mt-2 h-10 justify-center text-white text-lg'>
+                    <Menu.Button onClick={() => handlePlayerCompare(1)} className="flex items-center justify-center w-[150px] rounded-lg bg-gray-700 px-4 py-2 text-sm text-white hover:bg-gray-600">
+                        Compare Players
                     </Menu.Button>
-                    
-                    <Menu.Items as='ul' className='absolute mt-12 max-h-48 w-60 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
-                            {pPositions.map((position) => (
-                                <Menu.Item  key={position.pos} value={position}>
-                                    <div onClick={handlePosChoice} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{position.pos}</div>
-                                </Menu.Item>
-                            ))}
-                    </Menu.Items>
                 </Menu>
 
                 <Menu as='div' className='flex mt-2 h-10 justify-center text-white text-lg'>
@@ -361,60 +370,57 @@ export default function Compare( { teamsList } ) {
                     </Menu.Button>
                 </Menu>
             </div>
-
             
-            { ((posChosen == null) && (teamCompare == 0)) ? ( // nothing selected
-                <div className='flex h-screen justify-center'>
-                    <div className='text-4xl mt-4 font-bold text-white'>Make a selection</div>
-                    <div className='h-52'></div>
-                </div>
-                
-            ) : (
                 <div>
-                    { posChosen ? (
+                    { playerCompare ? (
                         <div className='flex flex-col'>
                             <div className='flex self-center text-4xl mt-4 font-bold text-white'>{posChosen.pos}</div>
-                            <button onClick={generatePlayers} className="flex justify-center self-center w-40 bg-gray-700 hover:bg-gray-600 active:bg-gray-500 text-white py-2 px-4 mt-4 rounded">
-                                Generate players
-                            </button>
-
+                            <Menu as='div' className='flex mt-2 h-10 justify-center text-white text-lg'>
+                                <Menu.Button className="flex w-[150px] rounded-lg bg-gray-700 px-4 py-2 text-sm text-white hover:bg-gray-600">
+                                    Select Position
+                                    <ChevronUpDownIcon className="ml-2 h-5 w-5" aria-hidden="true"/>
+                                </Menu.Button>
+                                
+                                <Menu.Items as='ul' className='absolute mt-12 max-h-48 w-60 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
+                                        {pPositions.map((position) => (
+                                            <Menu.Item  key={position.pos} value={position}>
+                                                <div onClick={handlePosChoice} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{position.pos}</div>
+                                            </Menu.Item>
+                                        ))}
+                                </Menu.Items>
+                            </Menu>
                             { playersList1 == null || playersList2 == null ? (
                                 <div className='h-screen'></div>
-                            ) : 
-                            (<div>
+                            ) : (
+                            <div>
                                 <div className='flex flex-row justify-around py-4'>
                                     <div className='flex flex-col justify-center'>
                                         
                                         <Image className='object-scale-down' alt='player-image' src={playerSel1.imgLinx} height={254} width={350} priority/>
                                         <div className='self-center pt-2 text-4xl font-bold text-white'>{playerSel1.firstName} {playerSel1.lastName}</div>
-                                        <div className='self-center pt-2 text-4xl font-bold text-white'>{teamSel1.school}</div>
-                                        <div className='flex'>
-                                            <Menu as='div' className='flex justify-center pt-4 mr-2 text-white text-lg'>
-                                                <Menu.Button className='flex items-center justify-between w-56 px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 active:bg-gray-500'>
-                                                        <div className='mr-2'>Select first team</div>
-                                                        <ChevronUpDownIcon className="h-5 w-5 text-white" aria-hidden="true"/>
-                                                </Menu.Button>
-                                                <Menu.Items as='ul' className='absolute z-40 mt-12 h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
-                                                    {teamsList.map((team) => (
-                                                        <Menu.Item as='li' key={team.id} value={team} >
-                                                            <div onClick={() => handleTeam1Choice(team)} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{team.school}</div>
-                                                        </Menu.Item>
-                                                    ))}
-                                                </Menu.Items>
-                                            </Menu>
-                                            <Menu as='div' className='flex justify-center pt-4 text-white text-lg'>
-                                                <Menu.Button className='flex items-center justify-between w-56 px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 active:bg-gray-500'>
-                                                        <div className='mr-2'>Select first player</div>
-                                                        <ChevronUpDownIcon className="h-5 w-5 text-white" aria-hidden="true"/>
-                                                </Menu.Button>
-                                                <Menu.Items as='ul' className='absolute z-40 mt-12 h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
-                                                    {playersList1.map((player) => (
-                                                        <Menu.Item as='li' key={player.id} value={player} >
-                                                            <div onClick={() => setPlayerSel1(player)} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{player.firstName} {player.lastName}</div>
-                                                        </Menu.Item>
-                                                    ))}
-                                                </Menu.Items>
-                                            </Menu>
+                                        <div className='self-center pt-2 text-4xl font-bold text-white'>{playerSel1.team}</div>
+                                        <div className='self-center mt-2'>
+                                            <Combobox as='div' className='flex justify-center text-white text-lg'>
+                                                <div className='flex focus:outline-none rounded-lg bg-gray-700'>
+                                                    <Combobox.Input onInput={handleSearch1} placeholder='Select new player...' className='outline-none ml-2 rounded-lg bg-gray-700' value={comboInput1}/>
+                                                    <Combobox.Button className="flex items-center px-4 py-2 rounded-md">
+                                                        <div className='min-w-[25px] my-auto mr-5'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                        </svg></div>
+                                                    </Combobox.Button>
+                                                </div>
+                                                <Combobox.Options className='absolute mt-12 max-h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
+                                                    {queryItems1.length == 0 ? (
+                                                        <div className="m-1 w-64 px-4 py-1 rounded-md">Player not found.</div>
+                                                    ) : (
+                                                        queryItems1.map((player) => (
+                                                            <Combobox.Option as='div' key={player.id} value={player} >
+                                                                <div onClick={() => setPlayerSel1(player)} className='m-1 w-64 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{player.firstName} {player.lastName}</div>
+                                                            </Combobox.Option>
+                                                        ))
+                                                    )}
+                                                </Combobox.Options>
+                                            </Combobox>
                                         </div>
                                     </div>
                                     <div className='flex'>
@@ -423,35 +429,29 @@ export default function Compare( { teamsList } ) {
                                     <div className='flex flex-col'>
                                         <Image className='object-scale-down' alt='player-image' src={playerSel2.imgLinx} height={254} width={350} priority/>
                                         <div className='self-center pt-2 text-4xl font-bold text-white'>{playerSel2.firstName} {playerSel2.lastName}</div>
-                                        <div className='self-center pt-2 text-4xl font-bold text-white'>{teamSel2.school}</div>
-                                        <div className='flex'>
-                                            <Menu as='div' className='flex justify-center pt-4 mr-2 text-white text-lg'>
-                                                <Menu.Button className='flex items-center justify-between w-56 px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 active:bg-gray-500'>
-                                                        <div className='mr-2'>Select first team</div>
-                                                        <ChevronUpDownIcon className="h-5 w-5 text-white" aria-hidden="true"/>
-                                                </Menu.Button>
-                                                <Menu.Items as='ul' className='absolute z-40 mt-12 h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
-                                                    {teamsList.map((team) => (
-                                                        <Menu.Item as='li' key={team.id} value={team} >
-                                                            <div onClick={() => handleTeam2Choice(team)} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{team.school}</div>
-                                                        </Menu.Item>
-                                                    ))}
-                                                </Menu.Items>
-                                            </Menu>
-                                            <Menu as='div' className='flex justify-center pt-4 text-white text-lg'>
-                                                <Menu.Button className='flex items-center justify-between w-56 px-4 py-2 rounded-md bg-gray-700 hover:bg-gray-600 active:bg-gray-500'>
-                                                        <div className='mr-2'>Select second player</div>
-                                                        <ChevronUpDownIcon className="h-5 w-5 text-white" aria-hidden="true"/>
-                                                </Menu.Button>
-                                                <Menu.Items as='ul' className='absolute z-40 mt-12 h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
-                                                    {playersList2.map((player) => (
-                                                        <Menu.Item as='li' key={player.id} value={player} >
-                                                            <div onClick={() => setPlayerSel2(player)} className='m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{player.firstName} {player.lastName}</div>
-                                                        </Menu.Item>
-                                                    ))}
-                                                </Menu.Items>
-                                            </Menu>
-
+                                        <div className='self-center pt-2 text-4xl font-bold text-white'>{playerSel2.team}</div>
+                                        <div className='self-center mt-2'>
+                                            <Combobox as='div' className='flex justify-center text-white text-lg'>
+                                                <div className='flex focus:outline-none rounded-lg bg-gray-700'>
+                                                    <Combobox.Input onInput={handleSearch2} placeholder='Select new player...' className='outline-none ml-2 rounded-lg bg-gray-700' value={comboInput2}/>
+                                                    <Combobox.Button className="flex items-center px-4 py-2 rounded-md">
+                                                        <div className='min-w-[25px] my-auto mr-5'><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                                                        </svg></div>
+                                                    </Combobox.Button>
+                                                </div>
+                                                <Combobox.Options className='absolute mt-12 max-h-48 overflow-y-scroll scrollbar rounded-md bg-gray-700'>
+                                                    {queryItems2.length == 0 ? (
+                                                        <div className="m-1 w-64 px-4 py-1 rounded-md">Player not found.</div>
+                                                    ) : (
+                                                        queryItems2.map((player) => (
+                                                            <Combobox.Option as='div' key={player.id} value={player} >
+                                                                <div onClick={() => setPlayerSel2(player)} className='m-1 w-64 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer'>{player.firstName} {player.lastName}</div>
+                                                            </Combobox.Option>
+                                                        ))
+                                                    )}
+                                                </Combobox.Options>
+                                            </Combobox>
                                         </div>
                                     </div>
                                 </div>
@@ -465,8 +465,8 @@ export default function Compare( { teamsList } ) {
                                         <div className='bg-gray-700 rounded-lg w-3/4 p-2'><Line options={options2} data={graphData2} /></div>
                                     </div>
                                 </div>
-                            </div>)
-                            }
+                            </div>
+                            )}
 
                         </div>
                     ) : (
@@ -533,7 +533,6 @@ export default function Compare( { teamsList } ) {
                         </div>
                     )}
                 </div>
-            )}
         </div>
     </Layout>
   )
