@@ -1,0 +1,11 @@
+Model Information:
+* title:	Wilson Football
+* source:	https://sketchfab.com/3d-models/wilson-football-b5677cbb469d4be98e4777c244cfcf27
+* author:	Austin Crane (Euclid) (https://sketchfab.com/Euclid)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Wilson Football" (https://sketchfab.com/3d-models/wilson-football-b5677cbb469d4be98e4777c244cfcf27) by Austin Crane (Euclid) (https://sketchfab.com/Euclid) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
