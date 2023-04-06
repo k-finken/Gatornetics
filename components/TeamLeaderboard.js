@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function TeamLeaderboard() {
-
     const data = [
         {
             id: 333,
@@ -28,6 +27,22 @@ export default function TeamLeaderboard() {
             name: "Ohio State",
             image: "https://a.espncdn.com/i/teamlogos/ncaa/500/194.png",
             conference: "Big Ten"
+        },
+        {
+            id: 245,
+            rank: 4,
+            talentScore: 947.3,
+            name: "Texas A&M",
+            image: "https://a.espncdn.com/i/teamlogos/ncaa/500/245.png",
+            conference: "SEC"
+        },
+        {
+            id: 228,
+            rank: 5,
+            talentScore: 943,
+            name: "Clemson",
+            image: "https://a.espncdn.com/i/teamlogos/ncaa/500/228.png",
+            conference: "ACC"
         }
     ]
 
