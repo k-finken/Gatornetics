@@ -6,10 +6,8 @@ import { prisma, PrismaClient } from '@prisma/client';
 import TeamLeaderboard from "./TeamLeaderboard";
 import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Environment } from '@react-three/drei'
 import { Model } from '../components/Scene'
-import { OrbitControls, SpotLight } from '@react-three/drei'
-import { degToRad } from "three/src/math/MathUtils";
+import { OrbitControls } from '@react-three/drei'
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Title, Legend, Tooltip, PieController);
 const fetcher = (...args) => fetch(...args).then(res => res.json())
