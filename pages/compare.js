@@ -30,13 +30,13 @@ ChartJS.register(
 
 const pPositions = [
     // { pos: 'Select Position',   abbr: "SP" },
-    { pos: 'Running Back',      abbr: "RB" },
     { pos: 'Quarterback',       abbr: "QB" },
+    { pos: 'Running Back',      abbr: "RB" },
     { pos: 'Linebacker',        abbr: "LB" },
     { pos: 'Defensive Lineman', abbr: "DL" },
     { pos: 'Defensive Back',    abbr: "DB" },
     { pos: 'Placekicker',       abbr: "PK" },
-    { pos: 'Safety',            abbr: "S" },
+    // { pos: 'Safety',            abbr: "S" },
     { pos: 'Wide Receiver',     abbr: "WR" },
     { pos: 'Tight End',         abbr: "TE" },
     { pos: 'Defensive End',     abbr: "DE" },
@@ -74,7 +74,7 @@ export async function getServerSideProps(context) {
 
 export default function Compare( { teamsList } ) {
     
-    const [posChosen, setPosChosen] = useState({ pos: 'Running Back', abbr: "RB" })
+    const [posChosen, setPosChosen] = useState({ pos: 'Quarterback', abbr: "QB" },)
     const [playerSel1, setPlayerSel1] = useState(null)
     const [playerSel2, setPlayerSel2] = useState(null)
     const [teamSel1, setTeamSel1] = useState(null)
@@ -131,9 +131,10 @@ export default function Compare( { teamsList } ) {
     }
 
     async function generatePlayers() {
-        // SEC teams with good initial stats: 52, 2, 2579, 142, 344, 61, 99, 333, 245
-        const posTeam1 = posChosen.abbr + " " + "99"; // LSU
-        const posTeam2 = posChosen.abbr + " " + "142"; // 
+        // SEC teams with good initial stats: 52 (BAD), 142 (BAD), 2, 2579, 344, 61, 99, 333, 245
+        // 
+        const posTeam1 = posChosen.abbr + " " + "96"; // LSU (99)
+        const posTeam2 = posChosen.abbr + " " + "194"; // Auburn (2)
         const playerArray1 = await playersAtPosTeam(posTeam1);
         const playerArray2 = await playersAtPosTeam(posTeam2);
 
