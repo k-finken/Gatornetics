@@ -50,7 +50,7 @@ export default function MachineLearning({ teamsList }) {
   }
   const yardsToGo = randomNumber(1, 20);
   const defenseScore = randomNumber(8, 60);
-  const offenseScore = defenseScore - randomNumber(2,6);
+  const offenseScore = defenseScore - randomNumber(4,6);
   
 
   return (

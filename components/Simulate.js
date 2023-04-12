@@ -8,7 +8,6 @@ import Confetti from "react-confetti";
 const plays = [
   { id: "Pass", name: "Pass" },
   { id: "Rush", name: "Rush" },
-  { id: "Field%20Goal", name: "Field Goal" },
 ];
 
 function Simulate({ team1, team2, setStep, yardsToGo, defenseScore, offenseScore}) {
@@ -66,7 +65,13 @@ function Simulate({ team1, team2, setStep, yardsToGo, defenseScore, offenseScore
               <div className="">
                 <div className="flex justify-center items-center mt-3">
                   <span className="text-5xl font-semibold leading-none">
-                    {offenseScore}
+                    <div>
+                        {yardsToGo - scoreReturned <= 0
+                      ? offenseScore + 7
+                      : yardsToGo - scoreReturned > 0
+                      ? offenseScore
+                      : ""}
+                    </div>
                   </span>
                   <span className="text-[28px] font-bold leading-none mx-2.5">
                     :
