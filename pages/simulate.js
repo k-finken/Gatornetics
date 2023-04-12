@@ -45,9 +45,12 @@ export default function MachineLearning({ teamsList }) {
   const [teamSel2, setTeamSel2] = useState(null)
   const [play, setPlay] = useState(null)
 
-  const yardsToGo = Math.floor(Math.random() * 20) + 1;
-  const defenseScore = Math.floor(Math.random() * 60) + 8;
-  const offenseScore = defenseScore - (Math.floor(Math.random() * 7) + 4);
+  function randomNumber(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
+  const yardsToGo = randomNumber(1, 20);
+  const defenseScore = randomNumber(8, 60);
+  const offenseScore = defenseScore - randomNumber(2,6);
   
 
   return (

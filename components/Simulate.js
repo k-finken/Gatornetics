@@ -149,7 +149,7 @@ function Simulate({ team1, team2, setStep, yardsToGo, defenseScore, offenseScore
             </h1>
             <h1 className="text-center mt-10 mb-4 text-3xl font-bold text-gray-100">
               {yardsToGo - scoreReturned <= 0
-                ? "TOUCHDOWN!"
+                ? "You Won!"
                 : yardsToGo - scoreReturned > 0
                 ? "Didn't quite make it."
                 : ""}
