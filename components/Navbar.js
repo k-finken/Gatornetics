@@ -97,7 +97,7 @@ export default function NavBar({teams}) {
     }
 
     return (
-        <nav className="w-full p-2">
+        <nav className="w-full p-2 mb-10">
             <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
                 <div>
                     <div className="flex items-center justify-between py-3 md:py-5 md:block">
@@ -236,7 +236,10 @@ export default function NavBar({teams}) {
                     >
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
                             <li className="text-white hover:text-gray-500">
-                                <Link href="/simulate">Simulate</Link>
+                                <Link href="/spread">Spread Predictor</Link>
+                            </li>
+                            <li className="text-white hover:text-gray-500">
+                            <Link href="/simulate">Simulate</Link>
                             </li>
                             <li className="text-white hover:text-gray-500">
                                 <Link href="/compare">Compare</Link>

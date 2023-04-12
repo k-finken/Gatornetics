@@ -13,8 +13,9 @@ import {
     Legend,
     PointElement,
     LineElement,
+    RadialLinearScale,
 } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Radar } from 'react-chartjs-2';
 import { Scatter } from 'react-chartjs-2';
 ChartJS.register(
     CategoryScale,
@@ -23,7 +24,9 @@ ChartJS.register(
     LineElement,
     BarElement,
     Title,
+    Legend,
     Tooltip,
+    RadialLinearScale
 );
 import Image from 'next/image';
 import InfoTooltip from '../../components/InfoTooltip';
@@ -104,9 +107,6 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
                     weight: "700"
                 }
             },
-            labels: {
-                fontColor: 'white'
-            }
         },
         scales: {
             y: {
@@ -117,6 +117,114 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
             }
         }
     };
+
+    const defdataArray = [];
+    defdataArray.push(teamData.defPassPlaySuccRT_perc);
+    defdataArray.push(teamData.defPwrSucc_perc);
+    defdataArray.push(teamData.defExpl_perc);
+    defdataArray.push(teamData.defRushPlaySuccRT_perc);
+    defdataArray.push(teamData.defLineYDSTOT_perc);
+    defdataArray.push(teamData.defTOTPPA_perc);
+
+    const defradarData = {
+        labels: ['Def. Pass Play Succ. Rate', 'Def. Power Succ. Rate', 'Def. Explosiveness', 'Def. Rush Play Succ. Rate', 'Def. Line Yards Gained', 'Def. Total PPA'],
+        datasets: [
+            {
+            label: 'Percentile Data',
+            data: defdataArray,
+            backgroundColor: 'white',
+            borderColor: 'white',   
+            borderWidth: 2,
+            },
+        ],
+    };
+
+    const defRadarOptions = {
+        responsive: true,
+        scales: {
+            r: {
+              ticks: { showLabelBackdrop: false, color: 'white' },
+              pointLabels: {
+                color: 'white'
+              }
+            },
+          },
+        defaults: {
+            color: 'white'
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Defensive Stats Percentiles',
+                font: {
+                    size: 34,
+                    family: "system-ui",
+                    weight: "700",
+                },
+                color: 'white'
+            },
+            legend: {
+                labels: {
+                    color: 'white'
+                }
+            }
+        },
+    };
+
+    const dataArray = [];
+    dataArray.push(teamData.offtotalPPA_perc);
+    dataArray.push(teamData.offsuccRate_perc);
+    dataArray.push(teamData.offexpl_perc);
+    dataArray.push(teamData.offpwrSucc_perc);
+    dataArray.push(teamData.offlineYdsTOT_perc);
+    dataArray.push(teamData.offTotOpp_perc);
+
+    const radarData = {
+        labels: ['Off. Total PPA', 'Off. Success Rate', 'Off. Explosiveness', 'Off. Power Succ. Rate', 'Off. Line Yards Gained', 'Off. Points Per Opportunity'],
+        datasets: [
+            {
+            label: 'Percentile',
+            data: dataArray,
+            backgroundColor: 'white',
+            borderColor: 'white',   
+            borderWidth: 2,
+            },
+        ],
+    };
+
+    const radarOptions = {
+        responsive: true,
+        scales: {
+            r: {
+              ticks: { showLabelBackdrop: false, color: 'white' },
+              pointLabels: {
+                color: 'white'
+              }
+            },
+          },
+        defaults: {
+            color: 'white'
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Offensive Stats Percentiles',
+                font: {
+                    size: 34,
+                    family: "system-ui",
+                    weight: "700",
+                },
+                color: 'white'
+            },
+            legend: {
+                labels: {
+                    color: 'white'
+                }
+            }
+        },
+    };
+
+
 
     const labels = [];
     divisionTeamData.forEach(team => {
@@ -153,6 +261,8 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
 
     // Tooltips text
     const expectedWinsInfo = "Expected wins are based on postgame win probabilities in which a team's previous game probabilities are summed together (and then formatted in terms of an overall score for how many wins a team will have in a given season).";
+    const overallOffInfo = "Total offensive score based on touchdowns, conversions, and field goals."
+    const overallDefInfo = "Total defensive score based on fumbles, interceptions, stoppages, and tackles."
 
     return (
         <Layout>
@@ -176,7 +286,7 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
                             <div className="flex items-end">
                                 <h3 className="text-xl">Expected Wins: </h3>
                                 <h3 className="text-2xl ml-3"><b>{teamData.expecWins}</b></h3>
-                                <div className='self-center'><InfoTooltip info={expectedWinsInfo}/></div>
+                                <div className='my-auto'><InfoTooltip info={expectedWinsInfo}/></div>
                             </div>
                             <div className="flex items-end">
                                 <h3 className="text-xl">Recruiting Rank: </h3>
@@ -185,10 +295,12 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
                             <div className="flex items-end">
                                 <h3 className="text-xl">Overall Offensive Score: </h3>
                                 <h3 className="text-2xl ml-3"><b>{teamData.overOff}</b></h3>
+                                <div className='my-auto'><InfoTooltip info={overallOffInfo}/></div>
                             </div>
                             <div className="flex items-end">
                                 <h3 className="text-xl">Overall Defensive Score: </h3>
                                 <h3 className="text-2xl ml-3"><b>{teamData.overDeff}</b></h3>
+                                <div className='my-auto'><InfoTooltip info={overallDefInfo}/></div>
                             </div>
                             <div className="flex items-end"><PlayersDropdown teamArray={allPlayers} title="Players"></PlayersDropdown></div>
                         </div>
@@ -205,6 +317,16 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
                 <div className="flex flex-wrap justify-center">
                     <div className='mx-96 h-auto w-6/12 bg-gray-700 px-6 py-2 rounded-lg'>
                         <Bar options={options} data={data} />
+                    </div>
+                </div>
+                <div className="flex flex-wrap justify-center mt-10">
+                    <div className='mx-96 h-auto w-6/12 bg-gray-700 px-6 py-2 rounded-lg'>
+                        <Radar options={radarOptions} data={radarData} />
+                    </div>
+                </div>
+                <div className="flex flex-wrap justify-center mt-10">
+                    <div className='mx-96 h-auto w-6/12 bg-gray-700 px-6 py-2 rounded-lg'>
+                        <Radar options={defRadarOptions} data={defradarData} />
                     </div>
                 </div>
             </div>

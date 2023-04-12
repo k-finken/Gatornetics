@@ -36,106 +36,126 @@ model players {
 }
 
 model teams {
-  id                  Int     @id
-  school              String  @db.VarChar(255)
-  conference          String? @db.VarChar(50)
-  color               String  @db.VarChar(7)
-  division            String? @db.VarChar(10)
-  wins                Int?
-  expecWins           Float?  @db.Float
-  recRank             Int?
-  talentScore         Float?  @db.Float
-  losses              Int?
-  overOff             Float?  @db.Float
-  overDeff            Float?  @db.Float
-  confWins            Int?
-  confLosses          Int?
-  homeW               Int?
-  homeL               Int?
-  awayW               Int?
-  awayL               Int?
-  playerIDS           Json?
-  abbr                String? @db.VarChar(5)
-  imgLinx             String? @db.Text
-  offPlayCt           Int?
-  offDriveCt          Int?
-  offPPA              Float?  @db.Float
-  offtotalPPA         Float?  @db.Float
-  offsuccRate         Float?  @db.Float
-  offexpl             Float?  @db.Float
-  offpwrSucc          Float?  @db.Float
-  offstuffRate        Float?  @db.Float
-  offlineYds          Float?  @db.Float
-  offlineYdsTOT       Int?
-  offSecLvlYds        Float?  @db.Float
-  offSecLvlYdsTOT     Int?
-  offOpenFieldYds     Float?  @db.Float
-  offOpenFieldYdsTOT  Int?
-  offTotOpp           Int?
-  offPPOpp            Float?  @db.Float
-  offFPavgStart       Float?  @db.Float
-  offFPavgPP          Float?  @db.Float
-  offHavocTOT         Float?  @db.Float
-  offHavocFS          Float?  @db.Float
-  offHavocDB          Float?  @db.Float
-  offsdDownRT         Float?  @db.Float
-  offsdDownPPA        Float?  @db.Float
-  offsdDownSuccRT     Float?  @db.Float
-  offsdDownExplRT     Float?  @db.Float
-  offpassDownRT       Float?  @db.Float
-  offpassDownPPA      Float?  @db.Float
-  offpassDownSuccRT   Float?  @db.Float
-  offpassDownExpl     Float?  @db.Float
-  offrushPlayRT       Float?  @db.Float
-  offrushPlayPPA      Float?  @db.Float
-  offrushPlayTOTPPA   Float?  @db.Float
-  offrushPlaySuccRT   Float?  @db.Float
-  offrushPlayExpl     Float?  @db.Float
-  offpassPlayRT       Float?  @db.Float
-  offpassPlayPPA      Float?  @db.Float
-  offpassPlayTOTPPA   Float?  @db.Float
-  offpassPlaySuccRate Float?  @db.Float
-  offpassPlayExpl     Float?  @db.Float
-  defensePlayCT       Int?
-  defenseDriveCT      Int?
-  defPPA              Float?  @db.Float
-  defTOTPPA           Float?  @db.Float
-  defSuccRT           Float?  @db.Float
-  defExpl             Float?  @db.Float
-  defPwrSucc          Float?  @db.Float
-  defStuffRT          Float?  @db.Float
-  defLineYDS          Float?  @db.Float
-  defLineYDSTOT       Int?
-  defsecondLvlYDS     Float?  @db.Float
-  defsecondLvlYDSTOT  Int?
-  defopenFldYDS       Float?  @db.Float
-  defopenFldYDSTOT    Int?
-  defTotOpp           Int?
-  defPPOpp            Float?  @db.Float
-  defFPAVGstart       Float?  @db.Float
-  defHavocTot         Float?  @db.Float
-  defHavocFS          Float?  @db.Float
-  defHavocDB          Float?  @db.Float
-  defSDRate           Float?  @db.Float
-  defSDPPA            Float?  @db.Float
-  defSDsuccRT         Float?  @db.Float
-  defSDExpl           Float?  @db.Float
-  defPassDownRT       Float?  @db.Float
-  defPassDownPPA      Float?  @db.Float
-  defPassDownPPATOT   Float?  @db.Float
-  defPassDownSuccRT   Float?  @db.Float
-  defPassDownExpl     Float?  @db.Float
-  defRushPlayRT       Float?  @db.Float
-  defRushPlayPPA      Float?  @db.Float
-  defRushPlayPPATOT   Float?  @db.Float
-  defRushPlaySuccRT   Float?  @db.Float
-  defRushPlayExpl     Float?  @db.Float
-  defPassPlayRT       Float?  @db.Float
-  defPassPlayPPA      Float?  @db.Float
-  defPassPlaySuccRT   Float?  @db.Float
-  defPassPlayExpl     Float?  @db.Float
-  playerDemographic   Json?
-  recruitPosition     Json?
+  id                       Int     @id
+  school                   String  @db.VarChar(255)
+  conference               String? @db.VarChar(50)
+  color                    String  @db.VarChar(7)
+  division                 String? @db.VarChar(10)
+  wins                     Int?
+  expecWins                Float?  @db.Float
+  recRank                  Int?
+  talentScore              Float?  @db.Float
+  losses                   Int?
+  overOff                  Float?  @db.Float
+  overDeff                 Float?  @db.Float
+  confWins                 Int?
+  confLosses               Int?
+  homeW                    Int?
+  homeL                    Int?
+  awayW                    Int?
+  awayL                    Int?
+  playerIDS                Json?
+  abbr                     String? @db.VarChar(5)
+  imgLinx                  String? @db.Text
+  offPlayCt                Int?
+  offDriveCt               Int?
+  offPPA                   Float?  @db.Float
+  offtotalPPA              Float?  @db.Float
+  offsuccRate              Float?  @db.Float
+  offexpl                  Float?  @db.Float
+  offpwrSucc               Float?  @db.Float
+  offstuffRate             Float?  @db.Float
+  offlineYds               Float?  @db.Float
+  offlineYdsTOT            Int?
+  offSecLvlYds             Float?  @db.Float
+  offSecLvlYdsTOT          Int?
+  offOpenFieldYds          Float?  @db.Float
+  offOpenFieldYdsTOT       Int?
+  offTotOpp                Int?
+  offPPOpp                 Float?  @db.Float
+  offFPavgStart            Float?  @db.Float
+  offFPavgPP               Float?  @db.Float
+  offHavocTOT              Float?  @db.Float
+  offHavocFS               Float?  @db.Float
+  offHavocDB               Float?  @db.Float
+  offsdDownRT              Float?  @db.Float
+  offsdDownPPA             Float?  @db.Float
+  offsdDownSuccRT          Float?  @db.Float
+  offsdDownExplRT          Float?  @db.Float
+  offpassDownRT            Float?  @db.Float
+  offpassDownPPA           Float?  @db.Float
+  offpassDownSuccRT        Float?  @db.Float
+  offpassDownExpl          Float?  @db.Float
+  offrushPlayRT            Float?  @db.Float
+  offrushPlayPPA           Float?  @db.Float
+  offrushPlayTOTPPA        Float?  @db.Float
+  offrushPlaySuccRT        Float?  @db.Float
+  offrushPlayExpl          Float?  @db.Float
+  offpassPlayRT            Float?  @db.Float
+  offpassPlayPPA           Float?  @db.Float
+  offpassPlayTOTPPA        Float?  @db.Float
+  offpassPlaySuccRate      Float?  @db.Float
+  offpassPlayExpl          Float?  @db.Float
+  defensePlayCT            Int?
+  defenseDriveCT           Int?
+  defPPA                   Float?  @db.Float
+  defTOTPPA                Float?  @db.Float
+  defSuccRT                Float?  @db.Float
+  defExpl                  Float?  @db.Float
+  defPwrSucc               Float?  @db.Float
+  defStuffRT               Float?  @db.Float
+  defLineYDS               Float?  @db.Float
+  defLineYDSTOT            Int?
+  defsecondLvlYDS          Float?  @db.Float
+  defsecondLvlYDSTOT       Int?
+  defopenFldYDS            Float?  @db.Float
+  defopenFldYDSTOT         Int?
+  defTotOpp                Int?
+  defPPOpp                 Float?  @db.Float
+  defFPAVGstart            Float?  @db.Float
+  defHavocTot              Float?  @db.Float
+  defHavocFS               Float?  @db.Float
+  defHavocDB               Float?  @db.Float
+  defSDRate                Float?  @db.Float
+  defSDPPA                 Float?  @db.Float
+  defSDsuccRT              Float?  @db.Float
+  defSDExpl                Float?  @db.Float
+  defPassDownRT            Float?  @db.Float
+  defPassDownPPA           Float?  @db.Float
+  defPassDownPPATOT        Float?  @db.Float
+  defPassDownSuccRT        Float?  @db.Float
+  defPassDownExpl          Float?  @db.Float
+  defRushPlayRT            Float?  @db.Float
+  defRushPlayPPA           Float?  @db.Float
+  defRushPlayPPATOT        Float?  @db.Float
+  defRushPlaySuccRT        Float?  @db.Float
+  defRushPlayExpl          Float?  @db.Float
+  defPassPlayRT            Float?  @db.Float
+  defPassPlayPPA           Float?  @db.Float
+  defPassPlaySuccRT        Float?  @db.Float
+  defPassPlayExpl          Float?  @db.Float
+  playerDemographic        Json?
+  recruitPosition          Json?
+  offtotalPPA_perc         Int?
+  offsuccRate_perc         Int?
+  offexpl_perc             Int?
+  offpwrSucc_perc          Int?
+  offlineYdsTOT_perc       Int?
+  offTotOpp_perc           Int?
+  offPPOpp_perc            Int?
+  offFPavgStart_perc       Int?
+  offrushPlaySuccRT_perc   Int?
+  offpassPlaySuccRate_perc Int?
+  defensePlayCT_perc       Int?
+  defTOTPPA_perc           Int?
+  defSuccRT_perc           Int?
+  defExpl_perc             Int?
+  defPwrSucc_perc          Int?
+  defStuffRT_perc          Int?
+  defLineYDSTOT_perc       Int?
+  defHavocTot_perc         Int?
+  defRushPlaySuccRT_perc   Int?
+  defPassPlaySuccRT_perc   Int?
 
   @@fulltext([school])
 }
