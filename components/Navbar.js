@@ -97,7 +97,7 @@ export default function NavBar({teams}) {
     }
 
     return (
-        <nav className="w-full p-2">
+        <nav className="w-full p-2 mb-10">
             <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
                 <div>
                     <div className="flex items-center justify-between py-3 md:py-5 md:block">

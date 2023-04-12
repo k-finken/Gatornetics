@@ -127,7 +127,7 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
     defdataArray.push(teamData.defTOTPPA_perc);
 
     const defradarData = {
-        labels: ['defPassPlaySuccRt', 'defPwrSucc', 'defExpl', 'defRushPlaySuccRT', 'defLineYDSTOT', 'defTOTPPA'],
+        labels: ['Def. Pass Play Succ. Rate', 'Def. Power Succ. Rate', 'Def. Explosiveness', 'Def. Rush Play Succ. Rate', 'Def. Line Yards Gained', 'Def. Total PPA'],
         datasets: [
             {
             label: 'Percentile Data',
@@ -180,7 +180,7 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
     dataArray.push(teamData.offTotOpp_perc);
 
     const radarData = {
-        labels: ['OffTotalPPA', 'OffsuccRate', 'Offexpl', 'OffpwrSucc', 'offlineYdsTOT', 'OffTotOpp'],
+        labels: ['Off. Total PPA', 'Off. Success Rate', 'Off. Explosiveness', 'Off. Power Succ. Rate', 'Off. Line Yards Gained', 'Off. Points Per Opportunity'],
         datasets: [
             {
             label: 'Percentile',
@@ -261,6 +261,8 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
 
     // Tooltips text
     const expectedWinsInfo = "Expected wins are based on postgame win probabilities in which a team's previous game probabilities are summed together (and then formatted in terms of an overall score for how many wins a team will have in a given season).";
+    const overallOffInfo = "Total offensive score based on touchdowns, conversions, and field goals."
+    const overallDefInfo = "Total defensive score based on fumbles, interceptions, stoppages, and tackles."
 
     return (
         <Layout>
@@ -284,7 +286,7 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
                             <div className="flex items-end">
                                 <h3 className="text-xl">Expected Wins: </h3>
                                 <h3 className="text-2xl ml-3"><b>{teamData.expecWins}</b></h3>
-                                <div className='self-center'><InfoTooltip info={expectedWinsInfo}/></div>
+                                <div className='my-auto'><InfoTooltip info={expectedWinsInfo}/></div>
                             </div>
                             <div className="flex items-end">
                                 <h3 className="text-xl">Recruiting Rank: </h3>
@@ -293,10 +295,12 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
                             <div className="flex items-end">
                                 <h3 className="text-xl">Overall Offensive Score: </h3>
                                 <h3 className="text-2xl ml-3"><b>{teamData.overOff}</b></h3>
+                                <div className='my-auto'><InfoTooltip info={overallOffInfo}/></div>
                             </div>
                             <div className="flex items-end">
                                 <h3 className="text-xl">Overall Defensive Score: </h3>
                                 <h3 className="text-2xl ml-3"><b>{teamData.overDeff}</b></h3>
+                                <div className='my-auto'><InfoTooltip info={overallDefInfo}/></div>
                             </div>
                             <div className="flex items-end"><PlayersDropdown teamArray={allPlayers} title="Players"></PlayersDropdown></div>
                         </div>

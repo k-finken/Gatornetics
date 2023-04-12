@@ -44,6 +44,10 @@ export default function MachineLearning({ teamsList }) {
   const [teamSel1, setTeamSel1] = useState(null)
   const [teamSel2, setTeamSel2] = useState(null)
   const [play, setPlay] = useState(null)
+
+  const yardsToGo = Math.floor(Math.random() * 20) + 1;
+  const defenseScore = Math.floor(Math.random() * 60) + 8;
+  const offenseScore = defenseScore - (Math.floor(Math.random() * 7) + 4);
   
 
   return (
@@ -119,7 +123,7 @@ export default function MachineLearning({ teamsList }) {
         </div>
       }
       {step == 1 && 
-        <Simulate team1={teamSel1} team2={teamSel2}/>
+        <Simulate yardsToGo={yardsToGo} offenseScore={offenseScore} defenseScore={defenseScore} setStep={setStep} team1={teamSel1} team2={teamSel2}/>
       }
       <div className="h-36"></div>
     </Layout>

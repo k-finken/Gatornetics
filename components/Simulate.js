@@ -1,14 +1,46 @@
 import React, { useState } from "react";
 import { Combobox, Menu } from "@headlessui/react";
-import { ChevronUpDownIcon } from "@heroicons/react/20/solid";
+import { ChevronUpDownIcon, ArrowPathIcon } from "@heroicons/react/20/solid";
+import loadingGif from "../public/loading-gif.gif"
+import Confetti from "react-confetti";
+
 
 const plays = [
-  // { pos: 'Select Position',   abbr: "SP" },
-  { id: "pass", name: "Pass" },
+  { id: "Pass", name: "Pass" },
+  { id: "Rush", name: "Rush" },
+  { id: "Field%20Goal", name: "Field Goal" },
 ];
 
-function Simulate({ team1, team2, offenseScore, defenseScore, yardsToGo }) {
+function Simulate({ team1, team2, setStep, yardsToGo, defenseScore, offenseScore}) {
   const [play, setPlay] = useState(null);
+  const [scoreReturned, setScoreReturned] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  async function runPlay(e) {
+    e.preventDefault();
+    console.log("running");
+    const fetchUrl = `https://gatornetics-2.herokuapp.com/getinps/?defenseScore=${defenseScore}&offenseScore=${offenseScore}&ytg=${yardsToGo}&offense_team=${team1.school}&defense_team=${team2.school}&play=${play.id}&key=28c53a5c-f930-4069-92a9-c1999a17c66b`;
+    setLoading(true);
+    try {
+      const response = await fetch(fetchUrl, {
+        method: "GET",
+        headers: {
+          accept: "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      console.log(result);
+      setScoreReturned(result);
+      setLoading(false);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   return (
     <div className="overflow-hidden">
@@ -34,17 +66,17 @@ function Simulate({ team1, team2, offenseScore, defenseScore, yardsToGo }) {
               <div className="">
                 <div className="flex justify-center items-center mt-3">
                   <span className="text-5xl font-semibold leading-none">
-                    58
+                    {offenseScore}
                   </span>
                   <span className="text-[28px] font-bold leading-none mx-2.5">
                     :
                   </span>
                   <span className="text-5xl font-semibold leading-none">
-                    72
+                    {defenseScore}
                   </span>
                 </div>
                 <div className="text-[#DF9443] text-sm font-semibold mt-2 text-center">
-                  72 Yards To Go
+                  {yardsToGo} Yards To Go
                 </div>
               </div>
             </div>
@@ -61,34 +93,81 @@ function Simulate({ team1, team2, offenseScore, defenseScore, yardsToGo }) {
           </div>
         </div>
       </div>
-      <div className="">
-        <h1 className="mt-40 text-center mt-10 mb-4 text-3xl font-bold text-gray-100">
-          Pick Your Play
-        </h1>
-        <Menu as="div" className="flex h-10 justify-center text-white text-lg">
-          <Menu.Button className="flex rounded-lg bg-gray-700 px-4 py-2 text-sm text-white font-normal hover:bg-gray-600">
-            {play == null ? "Select Play" : play.name}
-            <ChevronUpDownIcon className="ml-2 h-5 w-5" aria-hidden="true" />
-          </Menu.Button>
+      <div>
+        {!scoreReturned && !loading && (
+          <>
+            <div className="">
+              <h1 className="text-center mt-20 mb-4 text-3xl font-bold text-gray-100">
+                Pick Your Play
+              </h1>
+              <Menu
+                as="div"
+                className="flex h-10 justify-center text-white text-lg"
+              >
+                <Menu.Button className="flex rounded-lg bg-gray-700 px-4 py-2 text-sm text-white font-normal hover:bg-gray-600">
+                  {play == null ? "Select Play" : play.name}
+                  <ChevronUpDownIcon
+                    className="ml-2 h-5 w-5"
+                    aria-hidden="true"
+                  />
+                </Menu.Button>
 
-          <Menu.Items
-            as="ul"
-            className="absolute z-10 mt-12 max-h-48 w-60 overflow-y-scroll scrollbar rounded-md bg-gray-700"
-          >
-            {plays.map((play) => (
-              <Menu.Item key={play.id} value={play}>
-                <div
-                  onClick={() => setPlay(play)}
-                  className="m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer"
+                <Menu.Items
+                  as="ul"
+                  className="absolute z-10 mt-12 max-h-48 w-60 overflow-y-scroll scrollbar rounded-md bg-gray-700"
                 >
-                  {play.name}
-                </div>
-              </Menu.Item>
-            ))}
-          </Menu.Items>
-        </Menu>
+                  {plays.map((play) => (
+                    <Menu.Item key={play.id} value={play}>
+                      <div
+                        onClick={() => setPlay(play)}
+                        className="m-1 px-4 py-1 rounded-md ui-active:bg-gray-500 ui-active:cursor-pointer"
+                      >
+                        {play.name}
+                      </div>
+                    </Menu.Item>
+                  ))}
+                </Menu.Items>
+              </Menu>
+            </div>
+            <button
+              onClick={runPlay}
+              disabled={!play}
+              className="block mt-10 mx-auto disabled:bg-gray-400 bg-white text-gray-700 hover:bg-gray-100 btn btn-primary"
+            >
+              Run Your Play!
+            </button>
+          </>
+        )}
+        {!scoreReturned && loading &&
+        <div className="mt-32 flex justify-center items-center">
+          <ArrowPathIcon width={"64px"} className="animate-spin" />
+        </div>}
+        {scoreReturned && !loading && (
+          <div>
+            <h1 className="text-center mt-32 mb-4 text-3xl font-bold text-gray-100">
+              {scoreReturned >= 0 ? `Yards Gained: ${scoreReturned}` : `Yards Lost: ${scoreReturned}`}
+            </h1>
+            <h1 className="text-center mt-10 mb-4 text-3xl font-bold text-gray-100">
+              {yardsToGo - scoreReturned <= 0
+                ? "TOUCHDOWN!"
+                : yardsToGo - scoreReturned > 0
+                ? "Didn't quite make it."
+                : ""}
+            </h1>
+            {/* {(yardsToGo - scoreReturned <= 0) && 
+              <div className="mx-auto">
+                <Confetti confettiSource={} recycle={false} numberOfPieces={52}/>
+              </div>
+            } */}
+            <button
+              onClick={() => setStep(0)}
+              className="block mt-10 mx-auto disabled:bg-gray-400 bg-white text-gray-700 hover:bg-gray-100 btn btn-primary"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
       </div>
-      <button disabled={!(play)} className="block mt-10 mx-auto disabled:bg-gray-400 bg-white text-gray-700 hover:bg-gray-100 btn btn-primary">Run Your Play!</button>
     </div>
   );
 }

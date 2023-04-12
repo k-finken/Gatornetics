@@ -534,6 +534,9 @@ export default function Compare( { teamsList } ) {
                     )}
                 </div>
         </div>
+        <div className='h-36'>
+
+        </div>
     </Layout>
   )
 }
