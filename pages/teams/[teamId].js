@@ -13,8 +13,9 @@ import {
     Legend,
     PointElement,
     LineElement,
+    RadialLinearScale,
 } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Radar } from 'react-chartjs-2';
 import { Scatter } from 'react-chartjs-2';
 ChartJS.register(
     CategoryScale,
@@ -23,7 +24,9 @@ ChartJS.register(
     LineElement,
     BarElement,
     Title,
+    Legend,
     Tooltip,
+    RadialLinearScale
 );
 import Image from 'next/image';
 import InfoTooltip from '../../components/InfoTooltip';
@@ -104,9 +107,6 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
                     weight: "700"
                 }
             },
-            labels: {
-                fontColor: 'white'
-            }
         },
         scales: {
             y: {
@@ -117,6 +117,114 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
             }
         }
     };
+
+    const defdataArray = [];
+    defdataArray.push(teamData.defPassPlaySuccRT_perc);
+    defdataArray.push(teamData.defPwrSucc_perc);
+    defdataArray.push(teamData.defExpl_perc);
+    defdataArray.push(teamData.defRushPlaySuccRT_perc);
+    defdataArray.push(teamData.defLineYDSTOT_perc);
+    defdataArray.push(teamData.defTOTPPA_perc);
+
+    const defradarData = {
+        labels: ['defPassPlaySuccRt', 'defPwrSucc', 'defExpl', 'defRushPlaySuccRT', 'defLineYDSTOT', 'defTOTPPA'],
+        datasets: [
+            {
+            label: 'Percentile Data',
+            data: defdataArray,
+            backgroundColor: 'white',
+            borderColor: 'white',   
+            borderWidth: 2,
+            },
+        ],
+    };
+
+    const defRadarOptions = {
+        responsive: true,
+        scales: {
+            r: {
+              ticks: { showLabelBackdrop: false, color: 'white' },
+              pointLabels: {
+                color: 'white'
+              }
+            },
+          },
+        defaults: {
+            color: 'white'
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Defensive Stats Percentiles',
+                font: {
+                    size: 34,
+                    family: "system-ui",
+                    weight: "700",
+                },
+                color: 'white'
+            },
+            legend: {
+                labels: {
+                    color: 'white'
+                }
+            }
+        },
+    };
+
+    const dataArray = [];
+    dataArray.push(teamData.offtotalPPA_perc);
+    dataArray.push(teamData.offsuccRate_perc);
+    dataArray.push(teamData.offexpl_perc);
+    dataArray.push(teamData.offpwrSucc_perc);
+    dataArray.push(teamData.offlineYdsTOT_perc);
+    dataArray.push(teamData.offTotOpp_perc);
+
+    const radarData = {
+        labels: ['OffTotalPPA', 'OffsuccRate', 'Offexpl', 'OffpwrSucc', 'offlineYdsTOT', 'OffTotOpp'],
+        datasets: [
+            {
+            label: 'Percentile',
+            data: dataArray,
+            backgroundColor: 'white',
+            borderColor: 'white',   
+            borderWidth: 2,
+            },
+        ],
+    };
+
+    const radarOptions = {
+        responsive: true,
+        scales: {
+            r: {
+              ticks: { showLabelBackdrop: false, color: 'white' },
+              pointLabels: {
+                color: 'white'
+              }
+            },
+          },
+        defaults: {
+            color: 'white'
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Offensive Stats Percentiles',
+                font: {
+                    size: 34,
+                    family: "system-ui",
+                    weight: "700",
+                },
+                color: 'white'
+            },
+            legend: {
+                labels: {
+                    color: 'white'
+                }
+            }
+        },
+    };
+
+
 
     const labels = [];
     divisionTeamData.forEach(team => {
@@ -205,6 +313,16 @@ const TeamDetails = ({ teamData, divisionTeamData, allPlayers }) => {
                 <div className="flex flex-wrap justify-center">
                     <div className='mx-96 h-auto w-6/12 bg-gray-700 px-6 py-2 rounded-lg'>
                         <Bar options={options} data={data} />
+                    </div>
+                </div>
+                <div className="flex flex-wrap justify-center mt-10">
+                    <div className='mx-96 h-auto w-6/12 bg-gray-700 px-6 py-2 rounded-lg'>
+                        <Radar options={radarOptions} data={radarData} />
+                    </div>
+                </div>
+                <div className="flex flex-wrap justify-center mt-10">
+                    <div className='mx-96 h-auto w-6/12 bg-gray-700 px-6 py-2 rounded-lg'>
+                        <Radar options={defRadarOptions} data={defradarData} />
                     </div>
                 </div>
             </div>

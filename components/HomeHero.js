@@ -145,12 +145,12 @@ function Index({foundPlayer}) {
                         shadows
                         className="bg-transparent"
                         camera={{
-                            position: [-6, 9, 10],
+                            position: [-6, 9, 9],
                         }}>
                             <Suspense fallback={null}>
                             <Model />
-                            <ambientLight color={"white"} intensity={0.9} />
-                            <OrbitControls enablePan={false} enableZoom={false} autoRotate={true} autoRotateSpeed={10} />
+                            <ambientLight color={"white"} intensity={2.2}  />
+                            <OrbitControls enablePan={false} enableZoom={false}/>
                             </Suspense>
                     </Canvas>
                 </div>

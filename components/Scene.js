@@ -7,14 +7,19 @@ Source: https://sketchfab.com/3d-models/wilson-football-b5677cbb469d4be98e4777c2
 Title: Wilson Football
 */
 
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useGLTF } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 
 export function Model(props) {
   const { nodes, materials } = useGLTF('/scene.gltf')
+  const [rotateY, setRotateY] = useState(0.0);
+  useFrame(() => {
+    setRotateY(rotateY + 0.02);
+  })
   return (
     <group {...props} dispose={null}>
-      <group rotation={[-Math.PI / 2, 0, 0]}>
+      <group rotation={[rotateY, -.09, 0.05]} scale={1.4}>
         <mesh geometry={nodes.Object_3.geometry} material={materials.lambert2SG} position={[-9.03, -5.17, -5.17]} />
       </group>
     </group>

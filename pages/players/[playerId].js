@@ -105,9 +105,14 @@ const PlayerDetails = ({ playerData, teamData, playerTeam }) => {
     const avgStat2CB = [0.2968, 0.7656, 1.1406, 1.6015, 1.9843, 2.3281, 2.5546,2.9140, 3.1953, 3.5859, 4.1015, 4.5000, 4.4296];
 
     const playerPosStat1 = playerData.posStat1[0].replace('[', '').replace(']', '').split(', ');
-    const playerGraphStat1 = playerPosStat1.map(Number);
+    const playerGraphStat1 = playerPosStat1?.map(Number);
     const playerPosStat2 = playerData.posStat2[0].replace('[', '').replace(']', '').split(', ');
     const playerGraphStat2 = playerPosStat2.map(Number);
+
+    const playerPosStat1Pred = playerData.regPosStat1 != null ?  playerData.regPosStat1[0].replace('[', '').replace(']', '').split(', ') : null;
+    const playerGraphStat1Pred = playerData.regPosStat1 != null ? playerPosStat1Pred.map(Number) : console.log('bad data');
+    const playerPosStat2Pred = playerData.regPosStat2 != null ? playerData.regPosStat2[0].replace('[', '').replace(']', '').split(', ') : null;
+    const playerGraphStat2Pred = playerData.regPosStat1 != null ? playerPosStat2Pred.map(Number) : console.log('bad data');
 
     const labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8', 'Week 9', 'Week 10', 'Week 11', 'Week 12'];
 
@@ -258,6 +263,9 @@ const PlayerDetails = ({ playerData, teamData, playerTeam }) => {
     let label1ValueAvg = label1Value + " Average";
     let label2ValueAvg = label2Value + " Average";
 
+    let label1ValuePred = playerData.regPosStat1 != null ? "2023 " + label1Value + " Predicted" : "No Predicted Data";
+    let label2ValuePred = playerData.regPosStat1 != null ? "2023 " + label2Value + " Predicted" : "No Predicted Data";
+
     const playerGraphData1 = {
         labels,
         datasets: [
@@ -273,6 +281,12 @@ const PlayerDetails = ({ playerData, teamData, playerTeam }) => {
                 borderColor: "#808080",
                 backgroundColor: "#808080",
             },
+            {
+                label: label1ValuePred,
+                data: playerGraphStat1Pred,
+                borderColor: "green",
+                backgroundColor: "green",
+            } 
         ],
     };
 
@@ -291,6 +305,12 @@ const PlayerDetails = ({ playerData, teamData, playerTeam }) => {
                 borderColor: "#808080",
                 backgroundColor: "#808080",
             },
+            {
+                label: label2ValuePred,
+                data: playerGraphStat2Pred ?? null,
+                borderColor: "green",
+                backgroundColor: "green",
+            }
         ],
     };
 

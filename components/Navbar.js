@@ -236,7 +236,10 @@ export default function NavBar({teams}) {
                     >
                         <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
                             <li className="text-white hover:text-gray-500">
-                                <Link href="/simulate">Simulate</Link>
+                                <Link href="/spread">Spread Predictor</Link>
+                            </li>
+                            <li className="text-white hover:text-gray-500">
+                            <Link href="/simulate">Simulate</Link>
                             </li>
                             <li className="text-white hover:text-gray-500">
                                 <Link href="/compare">Compare</Link>

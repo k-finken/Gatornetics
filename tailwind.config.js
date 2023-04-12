@@ -8,6 +8,7 @@ module.exports = {
     extend: {},
   },
   plugins: [
-    require('@headlessui/tailwindcss') 
+    require('@headlessui/tailwindcss'), 
+    require('daisyui')
   ],
 }
